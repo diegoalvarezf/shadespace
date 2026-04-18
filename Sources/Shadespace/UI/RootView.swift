@@ -5,11 +5,13 @@ struct RootView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            VisualEffectBackground()
-                .clipShape(PanelShape(cornerRadius: 16))
+            if state.isExpanded {
+                VisualEffectBackground()
+                    .clipShape(PanelShape(cornerRadius: 16))
+                    .transition(.opacity)
+            }
 
             VStack(spacing: 0) {
-                // Collapsed pill (always present, fills the notch area)
                 Color.clear
                     .frame(height: state.collapsedRect.height)
 
