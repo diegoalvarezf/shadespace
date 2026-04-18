@@ -1,65 +1,61 @@
 import SwiftUI
 
 struct NowPlayingView: View {
-    @StateObject private var vm = NowPlayingViewModel()
+    @EnvironmentObject var modules: ModuleRegistry
 
     var body: some View {
         Group {
-            if let snap = vm.snapshot {
+            if let snap = modules.nowPlaying.snapshot {
                 playing(snap)
             } else {
                 idle
             }
         }
-        .onAppear { vm.start() }
-        .onDisappear { vm.stop() }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(12)
     }
 
     private func playing(_ snap: NowPlayingSnapshot) -> some View {
         HStack(spacing: 12) {
-            artwork
-                .frame(width: 52, height: 52)
+            artworkView
+                .frame(width: 56, height: 56)
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(snap.title)
                     .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white)
                     .lineLimit(1)
                 Text(snap.artist)
                     .font(.system(size: 11))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white.opacity(0.55))
                     .lineLimit(1)
-
-                ProgressBar(snap: snap, snapshotDate: vm.snapshotDate)
-                    .padding(.top, 4)
-
+                ProgressBar(snap: snap, snapshotDate: modules.nowPlaying.snapshotDate)
+                    .padding(.top, 5)
                 controls(snap)
-                    .padding(.top, 2)
+                    .padding(.top, 4)
             }
         }
-        .padding(12)
-        .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
-    private var artwork: some View {
+    private var artworkView: some View {
         Group {
-            if let img = vm.artwork {
+            if let img = modules.nowPlaying.artwork {
                 Image(nsImage: img).resizable().scaledToFill()
             } else {
                 ZStack {
                     Color.white.opacity(0.08)
-                    Image(systemName: "music.note")
-                        .foregroundStyle(.secondary)
+                    Image(systemName: "music.note").foregroundStyle(.secondary)
                 }
             }
         }
     }
 
     private func controls(_ snap: NowPlayingSnapshot) -> some View {
-        HStack(spacing: 18) {
-            controlBtn("backward.fill", size: 12) { vm.previous() }
-            controlBtn(snap.isPlaying ? "pause.fill" : "play.fill", size: 16) { vm.playPause() }
-            controlBtn("forward.fill", size: 12) { vm.next() }
+        HStack(spacing: 20) {
+            controlBtn("backward.fill", size: 12) { modules.nowPlaying.previous() }
+            controlBtn(snap.isPlaying ? "pause.fill" : "play.fill", size: 16) { modules.nowPlaying.playPause() }
+            controlBtn("forward.fill", size: 12) { modules.nowPlaying.next() }
         }
     }
 
@@ -67,38 +63,32 @@ struct NowPlayingView: View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(.system(size: size, weight: .semibold))
-                .frame(width: 26, height: 26)
+                .foregroundStyle(.white.opacity(0.85))
+                .frame(width: 28, height: 28)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
 
     private var idle: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "music.note")
-                .foregroundStyle(.tertiary)
-            Text("Nothing playing")
-                .font(.system(size: 12))
-                .foregroundStyle(.tertiary)
+        VStack(spacing: 8) {
+            Image(systemName: "music.note").font(.system(size: 22, weight: .light)).foregroundStyle(.tertiary)
+            Text("Nothing playing").font(.system(size: 12)).foregroundStyle(.tertiary)
         }
-        .frame(maxWidth: .infinity)
-        .padding(12)
-        .background(.white.opacity(0.03), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 private struct ProgressBar: View {
     let snap: NowPlayingSnapshot
     let snapshotDate: Date
-
     var body: some View {
         TimelineView(.periodic(from: .now, by: 0.25)) { ctx in
             let p = CGFloat(snap.progress(at: ctx.date, since: snapshotDate))
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule().fill(.white.opacity(0.15))
-                    Capsule().fill(.white.opacity(0.8))
-                        .frame(width: geo.size.width * p)
+                    Capsule().fill(.white.opacity(0.85)).frame(width: geo.size.width * p)
                 }
             }
             .frame(height: 3)

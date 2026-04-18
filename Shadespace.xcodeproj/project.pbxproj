@@ -7,40 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B79E27566B91304EA48DD4A /* SystemStatsMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2A5B9EEA616F2068011002 /* SystemStatsMonitor.swift */; };
+		0F63C29A791CF31602E7FA7D /* ModuleRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB11603AA4E4887C5A6388 /* ModuleRegistry.swift */; };
 		11D9470772828D9CD335F116 /* NotchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */; };
+		184B258ED11E866E2DC1AB3C /* PasteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784336058F4EC1CB16E81072 /* PasteService.swift */; };
 		27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57975F8252DB18C9C8A7110 /* AppDelegate.swift */; };
 		48E2367E3060FD7AEB942A04 /* ExpandedPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */; };
+		4AAD64EB824C762CF9B4E3A0 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D0A7CC253146B6AF73369C /* FocusController.swift */; };
 		4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */; };
 		57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40E111E1766F5F682DD350 /* NowPlayingView.swift */; };
 		59A48F7CBE498754D450BF3D /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0D4A9C629B72EFBA59F582 /* SpotifyController.swift */; };
 		5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */; };
 		66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2106F58391FE241071DEB /* HoverTracker.swift */; };
 		76B411B78F05C43F674D92A6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C5363AF031BD4D73A1A86 /* RootView.swift */; };
+		91FD7352D9890742585267D7 /* TabContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D562D5680A620CD8A389BE /* TabContainer.swift */; };
 		A14EBCB00A650D941A83A165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2C872DB288C859E9C6539C /* Assets.xcassets */; };
+		A1AA103E18D66618F9D3D0ED /* AIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B80EFDC3D2B8FE1EDDFE78 /* AIView.swift */; };
+		B39D051E94C2E05272298C02 /* SystemStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C809E9E1407F33429665322 /* SystemStatsView.swift */; };
 		BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */; };
+		BB7A79E0EDDB9D57DB29A3DC /* AISummarizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */; };
+		BE9A23B2C0A47905BEA2C833 /* ClipboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1A0089AB0D429FA7BE116 /* ClipboardView.swift */; };
+		CBBFC67DE3343D350C6C0ECA /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6465296208873E023CEC5F /* TabBar.swift */; };
 		D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7197957FCF021586B7D86234 /* NotchGeometry.swift */; };
+		D865CB2652C7D6CFDF1C96EF /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E5CBB1A36B8B599454DD45 /* FocusView.swift */; };
+		DE47A92ED08965CB87E0AB59 /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C79734862186B82FC4956B /* ClipboardStore.swift */; };
 		E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */; };
+		F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11488F7C69945BBB20C5463D /* AIModuleStore.swift */; };
+		F6242DAD25F77C259F9FF42F /* NotchLiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE4F58275C0C0B970316617 /* NotchLiveIndicator.swift */; };
 		FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503CAF85874106724D56662D /* NowPlayingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11488F7C69945BBB20C5463D /* AIModuleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModuleStore.swift; sourceTree = "<group>"; };
 		1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
+		2AF1A0089AB0D429FA7BE116 /* ClipboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardView.swift; sourceTree = "<group>"; };
 		43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchWindowController.swift; sourceTree = "<group>"; };
 		45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceState.swift; sourceTree = "<group>"; };
 		503CAF85874106724D56662D /* NowPlayingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewModel.swift; sourceTree = "<group>"; };
 		53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
+		57D562D5680A620CD8A389BE /* TabContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainer.swift; sourceTree = "<group>"; };
 		5A2C872DB288C859E9C6539C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		62D0A7CC253146B6AF73369C /* FocusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		7197957FCF021586B7D86234 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
+		71E5CBB1A36B8B599454DD45 /* FocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
 		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		784336058F4EC1CB16E81072 /* PasteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteService.swift; sourceTree = "<group>"; };
+		8C809E9E1407F33429665322 /* SystemStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatsView.swift; sourceTree = "<group>"; };
 		9B0D4A9C629B72EFBA59F582 /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		9DF986C1F462EE9A0030F334 /* Shadespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadespace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceApp.swift; sourceTree = "<group>"; };
 		A57975F8252DB18C9C8A7110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A76C5363AF031BD4D73A1A86 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		ABCB11603AA4E4887C5A6388 /* ModuleRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleRegistry.swift; sourceTree = "<group>"; };
+		B4C79734862186B82FC4956B /* ClipboardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStore.swift; sourceTree = "<group>"; };
 		B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPanelView.swift; sourceTree = "<group>"; };
 		BC40E111E1766F5F682DD350 /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
 		BDA2106F58391FE241071DEB /* HoverTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverTracker.swift; sourceTree = "<group>"; };
+		BE2A5B9EEA616F2068011002 /* SystemStatsMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatsMonitor.swift; sourceTree = "<group>"; };
+		C0B80EFDC3D2B8FE1EDDFE78 /* AIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIView.swift; sourceTree = "<group>"; };
+		CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISummarizer.swift; sourceTree = "<group>"; };
+		DFE4F58275C0C0B970316617 /* NotchLiveIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchLiveIndicator.swift; sourceTree = "<group>"; };
 		E9098FD91B5E07D6382BD436 /* Shadespace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shadespace.entitlements; sourceTree = "<group>"; };
+		FF6465296208873E023CEC5F /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -90,9 +118,32 @@
 		6404921B56F5DB12534AC142 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				99A9B0C60A3F88447534D849 /* AI */,
+				DACA6A75C7A6F279D62D5EF8 /* Clipboard */,
+				B90B3223ED9600DD20D6F445 /* Focus */,
 				EF19B781B5CE7EBE65BEABF6 /* NowPlaying */,
+				673FB51F6B02912FB8DA4D6A /* Stats */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		673FB51F6B02912FB8DA4D6A /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				BE2A5B9EEA616F2068011002 /* SystemStatsMonitor.swift */,
+				8C809E9E1407F33429665322 /* SystemStatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		99A9B0C60A3F88447534D849 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				11488F7C69945BBB20C5463D /* AIModuleStore.swift */,
+				CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */,
+				C0B80EFDC3D2B8FE1EDDFE78 /* AIView.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 		B70CADF75CCDFF6103210C03 /* Resources */ = {
@@ -103,12 +154,31 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		B90B3223ED9600DD20D6F445 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				62D0A7CC253146B6AF73369C /* FocusController.swift */,
+				71E5CBB1A36B8B599454DD45 /* FocusView.swift */,
+			);
+			path = Focus;
+			sourceTree = "<group>";
+		};
 		D965F72B0E6C91C2024C1267 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				9DF986C1F462EE9A0030F334 /* Shadespace.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DACA6A75C7A6F279D62D5EF8 /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				B4C79734862186B82FC4956B /* ClipboardStore.swift */,
+				2AF1A0089AB0D429FA7BE116 /* ClipboardView.swift */,
+				784336058F4EC1CB16E81072 /* PasteService.swift */,
+			);
+			path = Clipboard;
 			sourceTree = "<group>";
 		};
 		DB44F4FB0D1A101E5E1EC486 /* Sources */ = {
@@ -132,6 +202,7 @@
 		F74A5087A6BA3BC2BAF3DB23 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				ABCB11603AA4E4887C5A6388 /* ModuleRegistry.swift */,
 				45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */,
 			);
 			path = State;
@@ -141,7 +212,10 @@
 			isa = PBXGroup;
 			children = (
 				B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */,
+				DFE4F58275C0C0B970316617 /* NotchLiveIndicator.swift */,
 				A76C5363AF031BD4D73A1A86 /* RootView.swift */,
+				FF6465296208873E023CEC5F /* TabBar.swift */,
+				57D562D5680A620CD8A389BE /* TabContainer.swift */,
 				53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */,
 			);
 			path = UI;
@@ -217,18 +291,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */,
+				BB7A79E0EDDB9D57DB29A3DC /* AISummarizer.swift in Sources */,
+				A1AA103E18D66618F9D3D0ED /* AIView.swift in Sources */,
 				27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */,
+				DE47A92ED08965CB87E0AB59 /* ClipboardStore.swift in Sources */,
+				BE9A23B2C0A47905BEA2C833 /* ClipboardView.swift in Sources */,
 				48E2367E3060FD7AEB942A04 /* ExpandedPanelView.swift in Sources */,
+				4AAD64EB824C762CF9B4E3A0 /* FocusController.swift in Sources */,
+				D865CB2652C7D6CFDF1C96EF /* FocusView.swift in Sources */,
 				66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */,
+				0F63C29A791CF31602E7FA7D /* ModuleRegistry.swift in Sources */,
 				D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */,
+				F6242DAD25F77C259F9FF42F /* NotchLiveIndicator.swift in Sources */,
 				11D9470772828D9CD335F116 /* NotchPanel.swift in Sources */,
 				5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */,
 				57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */,
 				FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */,
+				184B258ED11E866E2DC1AB3C /* PasteService.swift in Sources */,
 				76B411B78F05C43F674D92A6 /* RootView.swift in Sources */,
 				BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */,
 				4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */,
 				59A48F7CBE498754D450BF3D /* SpotifyController.swift in Sources */,
+				0B79E27566B91304EA48DD4A /* SystemStatsMonitor.swift in Sources */,
+				B39D051E94C2E05272298C02 /* SystemStatsView.swift in Sources */,
+				CBBFC67DE3343D350C6C0ECA /* TabBar.swift in Sources */,
+				91FD7352D9890742585267D7 /* TabContainer.swift in Sources */,
 				E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

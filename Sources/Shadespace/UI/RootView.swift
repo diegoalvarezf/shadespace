@@ -7,14 +7,12 @@ struct RootView: View {
         ZStack(alignment: .top) {
             if state.isExpanded {
                 VisualEffectBackground()
-                    .clipShape(PanelShape(cornerRadius: 16))
+                    .overlay(Color.black.opacity(0.45))
+                    .clipShape(PanelShape(cornerRadius: 18))
                     .transition(.opacity)
             }
-
             VStack(spacing: 0) {
-                Color.clear
-                    .frame(height: state.collapsedRect.height)
-
+                notchRow
                 if state.isExpanded {
                     ExpandedPanelView()
                         .transition(.asymmetric(
@@ -26,17 +24,20 @@ struct RootView: View {
         }
         .animation(.spring(response: 0.32, dampingFraction: 0.82), value: state.isExpanded)
     }
+
+    private var notchRow: some View {
+        ZStack(alignment: .trailing) {
+            Color.black
+            NotchLiveIndicator(isActive: state.nowPlayingIsActive && !state.isExpanded)
+                .padding(.trailing, 10)
+        }
+        .frame(height: state.collapsedRect.height)
+    }
 }
 
 private struct PanelShape: Shape {
     var cornerRadius: CGFloat
-
     func path(in rect: CGRect) -> Path {
-        Path(roundedRect: CGRect(
-            x: rect.minX,
-            y: rect.minY,
-            width: rect.width,
-            height: rect.height
-        ), cornerRadius: cornerRadius)
+        Path(roundedRect: rect, cornerRadius: cornerRadius)
     }
 }

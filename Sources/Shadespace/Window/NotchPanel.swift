@@ -1,6 +1,8 @@
 import AppKit
 
 final class NotchPanel: NSPanel {
+    var shouldAcceptKey = false
+
     init(contentRect: NSRect) {
         super.init(
             contentRect: contentRect,
@@ -18,6 +20,6 @@ final class NotchPanel: NSPanel {
         isReleasedWhenClosed = false
     }
 
-    override var canBecomeKey: Bool { false }
+    override var canBecomeKey: Bool { shouldAcceptKey }
     override var canBecomeMain: Bool { false }
 }

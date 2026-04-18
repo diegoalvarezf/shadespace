@@ -5,6 +5,7 @@ import Combine
 @MainActor
 final class NotchWindowController {
     private let state: ShadespaceState
+    private let modules: ModuleRegistry
     private let panel: NotchPanel
     private let hoverTracker = HoverTracker()
     private var cancellables = Set<AnyCancellable>()
@@ -13,11 +14,16 @@ final class NotchWindowController {
     init() {
         let screen = NotchGeometry.notchScreen() ?? NSScreen.main!
         self.state = ShadespaceState(screen: screen)
+        self.modules = ModuleRegistry(state: state)
 
         let collapsed = NotchGeometry.collapsedRect(on: screen)
         self.panel = NotchPanel(contentRect: collapsed)
 
-        let hostingView = NSHostingView(rootView: RootView().environmentObject(state))
+        let hostingView = NSHostingView(
+            rootView: RootView()
+                .environmentObject(state)
+                .environmentObject(modules)
+        )
         hostingView.autoresizingMask = [.width, .height]
         panel.contentView = hostingView
 
@@ -26,9 +32,7 @@ final class NotchWindowController {
         observeScreenChanges()
     }
 
-    func show() {
-        panel.orderFrontRegardless()
-    }
+    func show() { panel.orderFrontRegardless() }
 
     // MARK: - Private
 
@@ -39,19 +43,25 @@ final class NotchWindowController {
                 guard let self else { return }
                 let target = expanded ? self.state.expandedRect : self.state.collapsedRect
                 self.animateFrame(to: target)
-                self.hoverTracker.hotZoneProvider = {
-                    expanded ? target : self.state.hotZoneRect
-                }
+                self.modules.setExpanded(expanded)
+                self.hoverTracker.hotZoneProvider = { expanded ? target : self.state.hotZoneRect }
+            }
+            .store(in: &cancellables)
+
+        // Allow key focus when AI tab is active (needed for TextField)
+        state.$activeTab
+            .combineLatest(state.$isExpanded)
+            .sink { [weak self] tab, expanded in
+                self?.panel.shouldAcceptKey = expanded && tab == .ai
+                if expanded && tab == .ai { self?.panel.makeKey() }
             }
             .store(in: &cancellables)
     }
 
     private func setupHoverTracker() {
-        hoverTracker.hotZoneProvider = { [weak self] in
-            self?.state.hotZoneRect ?? .zero
-        }
+        hoverTracker.hotZoneProvider = { [weak self] in self?.state.hotZoneRect ?? .zero }
         hoverTracker.onEnter = { [weak self] in self?.state.expand() }
-        hoverTracker.onExit = { [weak self] in self?.state.collapse(delay: 0.3) }
+        hoverTracker.onExit  = { [weak self] in self?.state.collapse(delay: 0.3) }
         hoverTracker.start()
     }
 
@@ -61,10 +71,8 @@ final class NotchWindowController {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.panel.setFrame(
-                NotchGeometry.collapsedRect(on: NotchGeometry.notchScreen() ?? NSScreen.main!),
-                display: true
-            )
+            guard let screen = NotchGeometry.notchScreen() ?? NSScreen.main else { return }
+            self?.panel.setFrame(NotchGeometry.collapsedRect(on: screen), display: true)
         }
     }
 

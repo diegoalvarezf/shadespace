@@ -2,23 +2,11 @@ import SwiftUI
 
 struct ExpandedPanelView: View {
     var body: some View {
-        VStack(spacing: 10) {
-            NowPlayingView()
-            Text("Clipboard — próximamente")
-                .font(.system(size: 11))
-                .foregroundStyle(.tertiary)
-                .frame(maxWidth: .infinity)
-                .padding(12)
-                .background(.white.opacity(0.03), in: RoundedRectangle(cornerRadius: 12))
-            Text("Stats & Focus — próximamente")
-                .font(.system(size: 11))
-                .foregroundStyle(.tertiary)
-                .frame(maxWidth: .infinity)
-                .padding(12)
-                .background(.white.opacity(0.03), in: RoundedRectangle(cornerRadius: 12))
+        VStack(spacing: 0) {
+            TabBar()
+            Divider().overlay(.white.opacity(0.08))
+            TabContainer()
+                .frame(maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
     }
 }
