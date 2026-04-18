@@ -11,6 +11,8 @@
 		27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57975F8252DB18C9C8A7110 /* AppDelegate.swift */; };
 		48E2367E3060FD7AEB942A04 /* ExpandedPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */; };
 		4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */; };
+		57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40E111E1766F5F682DD350 /* NowPlayingView.swift */; };
+		59A48F7CBE498754D450BF3D /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0D4A9C629B72EFBA59F582 /* SpotifyController.swift */; };
 		5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */; };
 		66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2106F58391FE241071DEB /* HoverTracker.swift */; };
 		76B411B78F05C43F674D92A6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C5363AF031BD4D73A1A86 /* RootView.swift */; };
@@ -18,21 +20,25 @@
 		BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */; };
 		D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7197957FCF021586B7D86234 /* NotchGeometry.swift */; };
 		E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */; };
+		FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503CAF85874106724D56662D /* NowPlayingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
 		43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchWindowController.swift; sourceTree = "<group>"; };
 		45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceState.swift; sourceTree = "<group>"; };
+		503CAF85874106724D56662D /* NowPlayingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewModel.swift; sourceTree = "<group>"; };
 		53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
 		5A2C872DB288C859E9C6539C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7197957FCF021586B7D86234 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
 		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9B0D4A9C629B72EFBA59F582 /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		9DF986C1F462EE9A0030F334 /* Shadespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadespace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceApp.swift; sourceTree = "<group>"; };
 		A57975F8252DB18C9C8A7110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A76C5363AF031BD4D73A1A86 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPanelView.swift; sourceTree = "<group>"; };
+		BC40E111E1766F5F682DD350 /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
 		BDA2106F58391FE241071DEB /* HoverTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverTracker.swift; sourceTree = "<group>"; };
 		E9098FD91B5E07D6382BD436 /* Shadespace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shadespace.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +90,7 @@
 		6404921B56F5DB12534AC142 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				EF19B781B5CE7EBE65BEABF6 /* NowPlaying */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -110,6 +117,16 @@
 				34401403C0D9F17E12F40629 /* Shadespace */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		EF19B781B5CE7EBE65BEABF6 /* NowPlaying */ = {
+			isa = PBXGroup;
+			children = (
+				BC40E111E1766F5F682DD350 /* NowPlayingView.swift */,
+				503CAF85874106724D56662D /* NowPlayingViewModel.swift */,
+				9B0D4A9C629B72EFBA59F582 /* SpotifyController.swift */,
+			);
+			path = NowPlaying;
 			sourceTree = "<group>";
 		};
 		F74A5087A6BA3BC2BAF3DB23 /* State */ = {
@@ -206,9 +223,12 @@
 				D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */,
 				11D9470772828D9CD335F116 /* NotchPanel.swift in Sources */,
 				5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */,
+				57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */,
+				FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */,
 				76B411B78F05C43F674D92A6 /* RootView.swift in Sources */,
 				BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */,
 				4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */,
+				59A48F7CBE498754D450BF3D /* SpotifyController.swift in Sources */,
 				E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
