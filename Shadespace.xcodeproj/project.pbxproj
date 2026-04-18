@@ -1,0 +1,406 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		11D9470772828D9CD335F116 /* NotchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */; };
+		27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57975F8252DB18C9C8A7110 /* AppDelegate.swift */; };
+		48E2367E3060FD7AEB942A04 /* ExpandedPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */; };
+		4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */; };
+		5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */; };
+		66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2106F58391FE241071DEB /* HoverTracker.swift */; };
+		76B411B78F05C43F674D92A6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C5363AF031BD4D73A1A86 /* RootView.swift */; };
+		A14EBCB00A650D941A83A165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2C872DB288C859E9C6539C /* Assets.xcassets */; };
+		BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */; };
+		D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7197957FCF021586B7D86234 /* NotchGeometry.swift */; };
+		E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
+		43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchWindowController.swift; sourceTree = "<group>"; };
+		45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceState.swift; sourceTree = "<group>"; };
+		53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
+		5A2C872DB288C859E9C6539C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7197957FCF021586B7D86234 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
+		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9DF986C1F462EE9A0030F334 /* Shadespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadespace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceApp.swift; sourceTree = "<group>"; };
+		A57975F8252DB18C9C8A7110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A76C5363AF031BD4D73A1A86 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPanelView.swift; sourceTree = "<group>"; };
+		BDA2106F58391FE241071DEB /* HoverTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverTracker.swift; sourceTree = "<group>"; };
+		E9098FD91B5E07D6382BD436 /* Shadespace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shadespace.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		065AC9334D713A2BC01BE973 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				BDA2106F58391FE241071DEB /* HoverTracker.swift */,
+				7197957FCF021586B7D86234 /* NotchGeometry.swift */,
+				1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */,
+				43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */,
+			);
+			path = Window;
+			sourceTree = "<group>";
+		};
+		22E8BF55A27C71B0AF3AAE03 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A57975F8252DB18C9C8A7110 /* AppDelegate.swift */,
+				72A3CEA5D28871062B54C98E /* Info.plist */,
+				E9098FD91B5E07D6382BD436 /* Shadespace.entitlements */,
+				9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		34401403C0D9F17E12F40629 /* Shadespace */ = {
+			isa = PBXGroup;
+			children = (
+				22E8BF55A27C71B0AF3AAE03 /* App */,
+				6404921B56F5DB12534AC142 /* Modules */,
+				B70CADF75CCDFF6103210C03 /* Resources */,
+				F74A5087A6BA3BC2BAF3DB23 /* State */,
+				FD2438F086CFBC0ABBBB4C08 /* UI */,
+				065AC9334D713A2BC01BE973 /* Window */,
+			);
+			path = Shadespace;
+			sourceTree = "<group>";
+		};
+		4AE8F06AE55638806D147AD0 = {
+			isa = PBXGroup;
+			children = (
+				DB44F4FB0D1A101E5E1EC486 /* Sources */,
+				D965F72B0E6C91C2024C1267 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6404921B56F5DB12534AC142 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		B70CADF75CCDFF6103210C03 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5A2C872DB288C859E9C6539C /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D965F72B0E6C91C2024C1267 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DF986C1F462EE9A0030F334 /* Shadespace.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB44F4FB0D1A101E5E1EC486 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				34401403C0D9F17E12F40629 /* Shadespace */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		F74A5087A6BA3BC2BAF3DB23 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		FD2438F086CFBC0ABBBB4C08 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B9F14BCF5F482E94B3CF2260 /* ExpandedPanelView.swift */,
+				A76C5363AF031BD4D73A1A86 /* RootView.swift */,
+				53B9BBC67F24C5B990198315 /* VisualEffectBackground.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		142D5B6B13F558D00A1E3B16 /* Shadespace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D98411E0CCCEF214087318BA /* Build configuration list for PBXNativeTarget "Shadespace" */;
+			buildPhases = (
+				1D048F3D94ABF7422625CB70 /* Sources */,
+				436503C67875AD20068A1228 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Shadespace;
+			packageProductDependencies = (
+			);
+			productName = Shadespace;
+			productReference = 9DF986C1F462EE9A0030F334 /* Shadespace.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5C16C1AEA23C813C45F42EB6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					142D5B6B13F558D00A1E3B16 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0F7E42E63DDAB343DEDE150B /* Build configuration list for PBXProject "Shadespace" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4AE8F06AE55638806D147AD0;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D965F72B0E6C91C2024C1267 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				142D5B6B13F558D00A1E3B16 /* Shadespace */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		436503C67875AD20068A1228 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A14EBCB00A650D941A83A165 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D048F3D94ABF7422625CB70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */,
+				48E2367E3060FD7AEB942A04 /* ExpandedPanelView.swift in Sources */,
+				66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */,
+				D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */,
+				11D9470772828D9CD335F116 /* NotchPanel.swift in Sources */,
+				5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */,
+				76B411B78F05C43F674D92A6 /* RootView.swift in Sources */,
+				BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */,
+				4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */,
+				E88BE920028E2A10E5ACA127 /* VisualEffectBackground.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		143704CCFBE233DEB51A783C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Shadespace/App/Shadespace.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/Shadespace/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.diegoalvarezfrancos.shadespace;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		78B2E21802B243DC07F4111A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		916ACB27B8852D47CF1BEF07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Shadespace/App/Shadespace.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/Shadespace/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.diegoalvarezfrancos.shadespace;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C2AC6EC2C1D0940474E431D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0F7E42E63DDAB343DEDE150B /* Build configuration list for PBXProject "Shadespace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78B2E21802B243DC07F4111A /* Debug */,
+				C2AC6EC2C1D0940474E431D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D98411E0CCCEF214087318BA /* Build configuration list for PBXNativeTarget "Shadespace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				916ACB27B8852D47CF1BEF07 /* Debug */,
+				143704CCFBE233DEB51A783C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5C16C1AEA23C813C45F42EB6 /* Project object */;
+}
