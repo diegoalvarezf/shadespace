@@ -5,6 +5,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Kill any existing instance before taking over
+        let running = NSWorkspace.shared.runningApplications
+            .filter { $0.bundleIdentifier == Bundle.main.bundleIdentifier && $0.processIdentifier != ProcessInfo.processInfo.processIdentifier }
+        running.forEach { $0.terminate() }
+
         NSApp.setActivationPolicy(.accessory)
         windowController = NotchWindowController()
         windowController?.show()
