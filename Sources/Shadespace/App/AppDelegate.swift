@@ -71,6 +71,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return item
     }
 
+    @objc private func chooseBotColor(_ sender: NSMenuItem) {
+        guard let raw = sender.representedObject as? String, let color = BotColor(rawValue: raw) else { return }
+        AppSettings.shared.botColor = color
+    }
     @objc private func toggleLiveActivity() { AppSettings.shared.showLiveActivity.toggle() }
     @objc private func toggleLyrics() { AppSettings.shared.lyricsEnabled.toggle() }
     @objc private func toggleLyricsInNotch() { AppSettings.shared.lyricsInNotch.toggle() }
@@ -91,6 +95,16 @@ extension AppDelegate: NSMenuDelegate {
 
         menu.addItem(sectionHeader("Notch"))
         menu.addItem(toggleItem("Show Activity Below Notch", settings.showLiveActivity, #selector(toggleLiveActivity)))
+
+        let colorItem = NSMenuItem(title: "Pomodoro Bot Color", action: nil, keyEquivalent: "")
+        let colorMenu = NSMenu()
+        for option in BotColor.allCases {
+            let item = toggleItem(option.title, settings.botColor == option, #selector(chooseBotColor(_:)))
+            item.representedObject = option.rawValue
+            colorMenu.addItem(item)
+        }
+        colorItem.submenu = colorMenu
+        menu.addItem(colorItem)
 
         menu.addItem(.separator())
         menu.addItem(sectionHeader("Music"))

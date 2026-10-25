@@ -24,15 +24,20 @@
 		66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2106F58391FE241071DEB /* HoverTracker.swift */; };
 		76B411B78F05C43F674D92A6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C5363AF031BD4D73A1A86 /* RootView.swift */; };
 		7E01DBFAA25FD50251347319 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F2C0D2F1023A0F41278FA /* Components.swift */; };
+		8B1A02D54260E982C0215562 /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00932D146EF9F2BB96DE13F4 /* PomodoroView.swift */; };
 		8CDA8B25C45807BA65AF99D6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAAB7C06CDD1917B0AC67E9 /* AppSettings.swift */; };
+		8F37E65E390209A2913D6786 /* SystemVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB853B9A8D6DE1943817D2F8 /* SystemVolume.swift */; };
+		9E64A2885BEAC12FAD942E77 /* AirDropService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE1D428041A384F230448E /* AirDropService.swift */; };
 		A14EBCB00A650D941A83A165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2C872DB288C859E9C6539C /* Assets.xcassets */; };
 		BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */; };
 		BB7A79E0EDDB9D57DB29A3DC /* AISummarizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */; };
 		D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7197957FCF021586B7D86234 /* NotchGeometry.swift */; };
 		D3F443CC709F2BC9EF5D6427 /* DropCatcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F483162305A122FE8AC65A1 /* DropCatcherView.swift */; };
 		D41B23B0FFF0012AD6C58F62 /* LyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33DC3F1C440BE2E459B66E0 /* LyricsService.swift */; };
+		E1A79547BCA2FEB665172358 /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */; };
 		F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11488F7C69945BBB20C5463D /* AIModuleStore.swift */; };
 		FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503CAF85874106724D56662D /* NowPlayingViewModel.swift */; };
+		FFAC138D017C45705D0BD660 /* PixelBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91240E1705D38C64BD80C6C5 /* PixelBot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00932D146EF9F2BB96DE13F4 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
 		03D7766C7D17DEFDA642C7B0 /* MediaPlayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayers.swift; sourceTree = "<group>"; };
 		0CA8491CEBD55ADDE4008E37 /* FileConverterStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConverterStore.swift; sourceTree = "<group>"; };
 		11488F7C69945BBB20C5463D /* AIModuleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModuleStore.swift; sourceTree = "<group>"; };
@@ -59,12 +65,15 @@
 		5A2C872DB288C859E9C6539C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FAFA67BD6BE0437D2CCC695 /* FileTrayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTrayStore.swift; sourceTree = "<group>"; };
 		6D964B0BCA6FBF83BDDA45D9 /* AirPodsMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPodsMonitor.swift; sourceTree = "<group>"; };
+		6DFE1D428041A384F230448E /* AirDropService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirDropService.swift; sourceTree = "<group>"; };
 		6F483162305A122FE8AC65A1 /* DropCatcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropCatcherView.swift; sourceTree = "<group>"; };
 		7197957FCF021586B7D86234 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
 		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F98EF396D9E30835577A3F0 /* FileTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTrayView.swift; sourceTree = "<group>"; };
+		91240E1705D38C64BD80C6C5 /* PixelBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelBot.swift; sourceTree = "<group>"; };
 		9DF986C1F462EE9A0030F334 /* Shadespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadespace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceApp.swift; sourceTree = "<group>"; };
+		9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		A57975F8252DB18C9C8A7110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A76C5363AF031BD4D73A1A86 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABCB11603AA4E4887C5A6388 /* ModuleRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleRegistry.swift; sourceTree = "<group>"; };
@@ -75,6 +84,7 @@
 		BDBDACED87980018DA716145 /* ShadespaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceTests.swift; sourceTree = "<group>"; };
 		C33DC3F1C440BE2E459B66E0 /* LyricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsService.swift; sourceTree = "<group>"; };
 		CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISummarizer.swift; sourceTree = "<group>"; };
+		DB853B9A8D6DE1943817D2F8 /* SystemVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemVolume.swift; sourceTree = "<group>"; };
 		E9098FD91B5E07D6382BD436 /* Shadespace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shadespace.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,10 +191,22 @@
 				1CC5145E7D871F30E97D2D8B /* Battery */,
 				832974B8768410186B93ABB4 /* Files */,
 				EF19B781B5CE7EBE65BEABF6 /* NowPlaying */,
+				6EC41C38ABF22F49DD14CBE6 /* Pomodoro */,
+				CB52E1DA2A8279FE7ECACBD6 /* Share */,
 				0688A907D22DB6A99BCC31D2 /* Tray */,
 				5049814910F2BD42B473B1C9 /* Weather */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		6EC41C38ABF22F49DD14CBE6 /* Pomodoro */ = {
+			isa = PBXGroup;
+			children = (
+				91240E1705D38C64BD80C6C5 /* PixelBot.swift */,
+				9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */,
+				00932D146EF9F2BB96DE13F4 /* PomodoroView.swift */,
+			);
+			path = Pomodoro;
 			sourceTree = "<group>";
 		};
 		832974B8768410186B93ABB4 /* Files */ = {
@@ -212,6 +234,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		CB52E1DA2A8279FE7ECACBD6 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				6DFE1D428041A384F230448E /* AirDropService.swift */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		D965F72B0E6C91C2024C1267 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +266,7 @@
 				03D7766C7D17DEFDA642C7B0 /* MediaPlayers.swift */,
 				BC40E111E1766F5F682DD350 /* NowPlayingView.swift */,
 				503CAF85874106724D56662D /* NowPlayingViewModel.swift */,
+				DB853B9A8D6DE1943817D2F8 /* SystemVolume.swift */,
 			);
 			path = NowPlaying;
 			sourceTree = "<group>";
@@ -355,6 +386,7 @@
 			files = (
 				F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */,
 				BB7A79E0EDDB9D57DB29A3DC /* AISummarizer.swift in Sources */,
+				9E64A2885BEAC12FAD942E77 /* AirDropService.swift in Sources */,
 				34A14439FBDC2EFA3E709401 /* AirPodsMonitor.swift in Sources */,
 				27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */,
 				8CDA8B25C45807BA65AF99D6 /* AppSettings.swift in Sources */,
@@ -373,9 +405,13 @@
 				5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */,
 				57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */,
 				FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */,
+				FFAC138D017C45705D0BD660 /* PixelBot.swift in Sources */,
+				E1A79547BCA2FEB665172358 /* PomodoroTimer.swift in Sources */,
+				8B1A02D54260E982C0215562 /* PomodoroView.swift in Sources */,
 				76B411B78F05C43F674D92A6 /* RootView.swift in Sources */,
 				BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */,
 				4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */,
+				8F37E65E390209A2913D6786 /* SystemVolume.swift in Sources */,
 				649FBD847CFEE3AA80B6F160 /* WeatherService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

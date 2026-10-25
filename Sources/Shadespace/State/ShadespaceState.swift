@@ -19,11 +19,14 @@ enum IslandAlert: Equatable {
     case batteryFull
     case airPods(AirPodsStatus)
     case trayAdded(count: Int)
+    case pomodoro(finished: PomodoroPhase, next: PomodoroPhase)
+    case pomodoroSkipped
 }
 
 /// Page shown in the expanded card when no activity is running.
 enum IslandPage: Equatable {
     case nowPlaying
+    case pomodoro
     case tray
 }
 
@@ -45,6 +48,8 @@ final class ShadespaceState: ObservableObject {
     @Published var page: IslandPage = .nowPlaying
     @Published private(set) var alert: IslandAlert?
     @Published private(set) var isDragging = false
+    /// A running or paused Pomodoro keeps the island visible beside the notch.
+    @Published var pomodoroActive = false
     @Published var hoveredDropZone: DropZone?
     /// Zones that can take what is being dragged; the others are dimmed.
     @Published var supportedDropZones: Set<DropZone> = Set(DropZone.allCases)
@@ -137,6 +142,7 @@ final class ShadespaceState: ObservableObject {
         if isExpanded { return NotchGeometry.expandedSize(on: screen) }
         if alert != nil { return NotchGeometry.peekSize(on: screen, liveActivity: liveActivity) }
         if liveActivity { return NotchGeometry.collapsedRect(on: screen).size }
+        if pomodoroActive { return NotchGeometry.activitySize(on: screen) }
         return NotchGeometry.hiddenSize(on: screen)
     }
 

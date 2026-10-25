@@ -10,6 +10,8 @@ final class ModuleRegistry: ObservableObject {
     let battery: BatteryMonitor
     let airPods: AirPodsMonitor
     let weather: WeatherService
+    let volume: SystemVolume
+    let pomodoro: PomodoroTimer
     private var cancellables = Set<AnyCancellable>()
 
     init(state: ShadespaceState) {
@@ -20,11 +22,14 @@ final class ModuleRegistry: ObservableObject {
         self.battery = BatteryMonitor(state: state)
         self.airPods = AirPodsMonitor(state: state)
         self.weather = WeatherService()
+        self.volume = SystemVolume()
+        self.pomodoro = PomodoroTimer(state: state)
 
         // Views observe the registry, so republish every module's changes through it
         let publishers: [ObservableObjectPublisher] = [
             nowPlaying.objectWillChange, ai.objectWillChange, fileConverter.objectWillChange,
             tray.objectWillChange, battery.objectWillChange, weather.objectWillChange,
+            volume.objectWillChange, pomodoro.objectWillChange,
         ]
         for publisher in publishers {
             publisher

@@ -74,6 +74,13 @@ enum NotchGeometry {
             : CGSize(width: collapsedPillWidth, height: 0)
     }
 
+    /// Live activity (e.g. a running Pomodoro): notch height, with content beside the camera.
+    static func activitySize(on screen: NSScreen) -> CGSize {
+        hasNotch(screen)
+            ? CGSize(width: collapsedRect(on: screen).width, height: physicalNotchHeight(on: screen))
+            : CGSize(width: 150, height: 26)
+    }
+
     /// Top part of a peek alert: the notch itself when hidden, the full collapsed row otherwise.
     static func peekHeaderHeight(on screen: NSScreen, liveActivity: Bool) -> CGFloat {
         liveActivity ? collapsedRect(on: screen).height : max(physicalNotchHeight(on: screen), 6)

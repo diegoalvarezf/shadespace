@@ -4,12 +4,14 @@ A native macOS app that turns the MacBook notch into a small, quiet island. It s
 
 ## Features
 
-- **Now Playing**: Spotify and Apple Music with artwork, play/pause, skip, shuffle, repeat and seeking. Swipe horizontally over the island to change track.
+- **Now Playing**: Spotify and Apple Music with artwork, play/pause, skip, shuffle, repeat and seeking. Swipe horizontally over the island to change track. The system volume slider follows the current output, keyboard volume keys included.
 - **Synced lyrics**: the current line follows the song, from [LRCLib](https://lrclib.net).
 - **Drop a file on the notch**: three zones appear.
   - **Summarize**: on-device summaries of PDFs, text and Word documents, plus questions about them, using Apple Intelligence. Nothing leaves the Mac.
   - **Convert**: PNG ↔ JPG, and HEIC, WebP, TIFF or GIF to PNG/JPG. The original is never overwritten.
-  - **Tray**: keep files for later and drag them out into any app.
+  - **AirDrop**: send the files to a nearby device.
+  - **Tray**: keep files for later, drag them out into any app or AirDrop them.
+- **Pomodoro**: 15, 25 or 50-minute focus sessions with short breaks and a long break every fourth session. While it runs, a pixel bot and the countdown sit beside the notch; the bot blinks while you focus, bounces on breaks, dozes when paused and celebrates when a session ends. Its color is set in the menu.
 - **Alerts**: charger connected, low battery, fully charged, AirPods connected with their battery levels.
 - **Home**: clock, date and local weather when nothing is playing.
 - **Any display**: on Macs without a notch or on an external monitor, the island opens from the top edge of the screen.

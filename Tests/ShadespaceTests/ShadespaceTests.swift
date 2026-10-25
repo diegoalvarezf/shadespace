@@ -150,9 +150,46 @@ final class DropRoutingTests: XCTestCase {
         let image = [URL(fileURLWithPath: "/tmp/photo.png")]
         let pdf = [URL(fileURLWithPath: "/tmp/paper.pdf")]
         let zip = [URL(fileURLWithPath: "/tmp/archive.zip")]
-        XCTAssertEqual(ModuleRegistry.supportedZones(for: image), [.convert, .tray])
-        XCTAssertEqual(ModuleRegistry.supportedZones(for: pdf), [.summarize, .tray])
-        XCTAssertEqual(ModuleRegistry.supportedZones(for: zip), [.tray])
+        // AirDrop takes any file when the Mac supports it
+        let airDrop: Set<DropZone> = AirDropService.isAvailable ? [.airDrop] : []
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: image), Set<DropZone>([.convert, .tray]).union(airDrop))
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: pdf), Set<DropZone>([.summarize, .tray]).union(airDrop))
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: zip), Set<DropZone>([.tray]).union(airDrop))
         XCTAssertEqual(ModuleRegistry.supportedZones(for: []), [.tray])
+    }
+}
+
+@MainActor
+final class PomodoroTests: XCTestCase {
+    func testCycleGoesFocusShortBreakThenLongBreakAfterFour() {
+        let timer = PomodoroTimer(state: ShadespaceState(screen: NSScreen.screens[0]))
+        timer.reset()
+        var phases: [PomodoroPhase] = []
+        for _ in 0..<8 {
+            phases.append(timer.phase)
+            timer.skip()
+        }
+        XCTAssertEqual(phases, [.focus, .shortBreak, .focus, .shortBreak, .focus, .shortBreak, .focus, .longBreak])
+        // The eighth skip ended the long break: a new cycle starts
+        XCTAssertEqual(timer.phase, .focus)
+        XCTAssertEqual(timer.completedFocusSessions, 0)
+    }
+
+    func testPauseKeepsRemainingTime() {
+        let timer = PomodoroTimer(state: ShadespaceState(screen: NSScreen.screens[0]))
+        timer.reset()
+        timer.focusMinutes = 25
+        timer.startOrPause()
+        XCTAssertTrue(timer.isRunning)
+        timer.startOrPause()
+        XCTAssertFalse(timer.isRunning)
+        XCTAssertEqual(timer.remaining(at: Date().addingTimeInterval(600)), 25 * 60, accuracy: 1)
+        timer.reset()
+    }
+
+    func testFormat() {
+        XCTAssertEqual(PomodoroView.format(25 * 60), "25:00")
+        XCTAssertEqual(PomodoroView.format(59.2), "1:00")
+        XCTAssertEqual(PomodoroView.format(0), "0:00")
     }
 }

@@ -28,6 +28,11 @@ struct RootView: View {
             } else {
                 if settings.showLiveActivity {
                     CollapsedNotchRow()
+                } else if state.pomodoroActive {
+                    PomodoroEars()
+                        .frame(height: state.alert == nil
+                            ? state.islandSize.height
+                            : NotchGeometry.peekHeaderHeight(on: state.screen, liveActivity: false))
                 } else {
                     // Hidden: only the notch-sized black area, invisible against the hardware
                     Color.clear.frame(height: state.alert == nil
@@ -79,6 +84,7 @@ struct RootView: View {
             case .idle:
                 switch state.page {
                 case .nowPlaying: NowPlayingView()
+                case .pomodoro:   PomodoroView()
                 case .tray:       FileTrayView()
                 }
             case .aiReading(let progress):
@@ -107,6 +113,7 @@ struct RootView: View {
 /// Black row that blends with the physical notch. Content flanks the camera housing,
 /// and a thin live strip below it shows the current activity.
 private struct CollapsedNotchRow: View {
+    @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var state: ShadespaceState
     @EnvironmentObject var modules: ModuleRegistry
 
@@ -118,7 +125,9 @@ private struct CollapsedNotchRow: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 ZStack {
-                    if state.mode == .idle, let img = modules.nowPlaying.artwork {
+                    if state.pomodoroActive {
+                        PixelBot(mood: modules.pomodoro.mood, focusColor: settings.botColor.color).frame(width: 30, height: 30)
+                    } else if state.mode == .idle, let img = modules.nowPlaying.artwork {
                         Image(nsImage: img)
                             .resizable()
                             .scaledToFill()
@@ -133,7 +142,9 @@ private struct CollapsedNotchRow: View {
                 Spacer() // physical notch camera — no visible pixels
 
                 ZStack {
-                    if state.mode == .idle {
+                    if state.pomodoroActive {
+                        PomodoroCountdown()
+                    } else if state.mode == .idle {
                         EqualizerBars(isActive: state.nowPlayingIsActive, color: .white.opacity(0.85))
                     }
                 }
@@ -147,6 +158,49 @@ private struct CollapsedNotchRow: View {
                 .padding(.horizontal, min(extL, extR))
         }
         .frame(height: NotchGeometry.collapsedRect(on: state.screen).height, alignment: .top)
+    }
+}
+
+/// Running Pomodoro while the island is otherwise hidden: the bot on the left of the
+/// camera, the countdown on the right.
+private struct PomodoroEars: View {
+    @EnvironmentObject var settings: AppSettings
+    @EnvironmentObject var state: ShadespaceState
+    @EnvironmentObject var modules: ModuleRegistry
+
+    var body: some View {
+        let notchW = NotchGeometry.hasNotch(state.screen) ? NotchGeometry.physicalNotchWidth(on: state.screen) : 0
+        HStack(spacing: 0) {
+            PixelBot(mood: modules.pomodoro.mood, focusColor: settings.botColor.color)
+                .frame(width: 30, height: 30)
+                .frame(maxWidth: .infinity)
+            Color.clear.frame(width: notchW)
+            PomodoroCountdown()
+                .frame(maxWidth: .infinity)
+        }
+        .transition(.opacity)
+    }
+}
+
+private struct PomodoroCountdown: View {
+    @EnvironmentObject var settings: AppSettings
+    @EnvironmentObject var modules: ModuleRegistry
+
+    var body: some View {
+        let timer = modules.pomodoro
+        TimelineView(.periodic(from: .now, by: 1)) { ctx in
+            HStack(spacing: 3) {
+                if !timer.isRunning {
+                    Image(systemName: "pause.fill").font(.system(size: 7, weight: .bold))
+                }
+                Text(PomodoroView.format(timer.remaining(at: ctx.date)))
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .monospacedDigit()
+            }
+            .foregroundStyle(PixelBot.accent(for: timer.phase == .focus ? .focus : .rest,
+                                             focusColor: settings.botColor.color))
+            .opacity(timer.isRunning ? 1 : 0.55)
+        }
     }
 }
 
@@ -221,6 +275,7 @@ private struct CollapsedLiveContent: View {
 
 /// Uses the space beside the camera housing: page switcher on the left, weather and battery on the right.
 private struct ExpandedHeader: View {
+    @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var state: ShadespaceState
     @EnvironmentObject var modules: ModuleRegistry
 
@@ -233,6 +288,7 @@ private struct ExpandedHeader: View {
             HStack(spacing: 0) {
                 HStack(spacing: 4) {
                     pageButton(.nowPlaying, symbol: "music.note")
+                    pageButton(.pomodoro, symbol: "timer", indicator: modules.pomodoro.isRunning)
                     pageButton(.tray, symbol: "tray.full", badge: modules.tray.items.count)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -250,7 +306,7 @@ private struct ExpandedHeader: View {
         .frame(height: collapsedHeight)
     }
 
-    private func pageButton(_ page: IslandPage, symbol: String, badge: Int = 0) -> some View {
+    private func pageButton(_ page: IslandPage, symbol: String, badge: Int = 0, indicator: Bool = false) -> some View {
         let selected = state.mode == .idle && state.page == page
         return Button {
             if state.mode != .idle { return }
@@ -259,6 +315,9 @@ private struct ExpandedHeader: View {
             HStack(spacing: 3) {
                 Image(systemName: symbol)
                     .font(.system(size: 10, weight: .semibold))
+                if indicator {
+                    Circle().fill(settings.botColor.color).frame(width: 4, height: 4)
+                }
                 if badge > 0 {
                     Text("\(badge)")
                         .font(.system(size: 9, weight: .semibold, design: .rounded))
@@ -314,6 +373,9 @@ private struct StatusSummaryContent: View {
 
 private struct AlertRow: View {
     let alert: IslandAlert
+    @EnvironmentObject var settings: AppSettings
+
+    private var botColor: Color { settings.botColor.color }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -342,6 +404,17 @@ private struct AlertRow: View {
             case .trayAdded(let count):
                 Image(systemName: "tray.and.arrow.down.fill")
                 Text(count == 1 ? "Added to Tray" : "\(count) files added to Tray").fontWeight(.semibold)
+                Spacer()
+            case .pomodoro(let finished, let next):
+                PixelBot(mood: finished == .focus ? .celebrate : .focus, focusColor: botColor)
+                    .frame(width: 26, height: 26)
+                Text(finished == .focus ? "Focus done!" : "Break over").fontWeight(.semibold)
+                Spacer()
+                Text("Next: \(next.title)").foregroundStyle(.white.opacity(0.5))
+            case .pomodoroSkipped:
+                PixelBot(mood: .sad, focusColor: botColor)
+                    .frame(width: 26, height: 26)
+                Text("Focus skipped").fontWeight(.semibold)
                 Spacer()
             }
         }
