@@ -55,8 +55,12 @@ struct NowPlayingView: View {
 
             controls(track)
                 .padding(.horizontal, 10)
-                .padding(.top, 8)
-                .padding(.bottom, 12)
+                .padding(.top, 6)
+
+            VolumeRow(volume: modules.volume)
+                .padding(.horizontal, 16)
+                .padding(.top, 2)
+                .padding(.bottom, 10)
         }
     }
 
@@ -224,5 +228,59 @@ private struct ProgressRow: View {
     private func formatTime(_ t: TimeInterval) -> String {
         let s = max(0, Int(t))
         return String(format: "%d:%02d", s / 60, s % 60)
+    }
+}
+
+// MARK: - Volume
+
+/// System output volume; tap the speaker to mute.
+private struct VolumeRow: View {
+    @ObservedObject var volume: SystemVolume
+    @State private var dragValue: Float?
+
+    var body: some View {
+        let level = dragValue ?? (volume.isMuted ? 0 : volume.volume)
+        HStack(spacing: 8) {
+            Button(action: volume.toggleMute) {
+                Image(systemName: symbol(for: level))
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.45))
+                    .frame(width: 16, height: 14)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(volume.isMuted ? "Unmute" : "Mute")
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(.white.opacity(0.1))
+                    Capsule().fill(.white.opacity(0.55))
+                        .frame(width: max(0, geo.size.width * CGFloat(level)))
+                }
+                .frame(height: dragValue == nil ? 3 : 5)
+                .frame(maxHeight: .infinity)
+                .contentShape(Rectangle())
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { value in
+                            let fraction = Float(min(max(value.location.x / geo.size.width, 0), 1))
+                            dragValue = fraction
+                            volume.setVolume(fraction)
+                        }
+                        .onEnded { _ in dragValue = nil }
+                )
+                .animation(.easeOut(duration: 0.15), value: dragValue == nil)
+            }
+            .frame(height: 12)
+        }
+        .disabled(!volume.isAdjustable)
+        .opacity(volume.isAdjustable ? 1 : 0.4)
+    }
+
+    private func symbol(for level: Float) -> String {
+        if volume.isMuted || level == 0 { return "speaker.slash.fill" }
+        if level < 0.34 { return "speaker.wave.1.fill" }
+        if level < 0.67 { return "speaker.wave.2.fill" }
+        return "speaker.wave.3.fill"
     }
 }
