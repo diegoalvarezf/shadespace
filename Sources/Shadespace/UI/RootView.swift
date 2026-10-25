@@ -27,7 +27,14 @@ struct RootView: View {
             if state.isExpanded {
                 ExpandedHeader()
             } else {
-                CollapsedNotchRow()
+                if settings.showLiveActivity {
+                    CollapsedNotchRow()
+                } else {
+                    // Hidden: only the notch-sized black area, invisible against the hardware
+                    Color.clear.frame(height: state.alert == nil
+                        ? state.islandSize.height
+                        : NotchGeometry.peekHeaderHeight(on: state.screen, liveActivity: false))
+                }
                 if let alert = state.alert {
                     AlertRow(alert: alert)
                         .frame(height: NotchGeometry.peekContentHeight)
@@ -682,8 +689,10 @@ private struct IslandShape: Shape {
         // collapsed: topR=0 (flush with notch hardware), botR=14
         // expanded:  topR=10, botR=20
         // hover pre-expand: slightly increase botR to hint at upcoming expand
-        let topR = max(0.0, 10.0 * p)
-        let botR = max(2.0, 14.0 + 6.0 * p + 3.0 * hoverProgress * (1.0 - p))
+        // Clamp radii so a notch-sized (hidden) island never gets overlapping arcs
+        let maxR = max(0, min(rect.width, rect.height) / 2)
+        let topR = min(max(0.0, 10.0 * p), maxR)
+        let botR = min(max(2.0, 14.0 + 6.0 * p + 3.0 * hoverProgress * (1.0 - p)), maxR)
         // Organic "neck": side edges bow inward slightly at mid-transition (sin peaks at p=0.5)
         let neck = sin(p * .pi) * 4.0
 

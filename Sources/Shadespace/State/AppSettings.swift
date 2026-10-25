@@ -6,6 +6,9 @@ import ServiceManagement
 final class AppSettings: ObservableObject {
     static let shared = AppSettings()
 
+    /// Off: the island hides inside the physical notch until hovered. On: a strip below the
+    /// notch shows the current song or activity.
+    @Published var showLiveActivity: Bool { didSet { save(showLiveActivity, .showLiveActivity) } }
     @Published var lyricsEnabled: Bool { didSet { save(lyricsEnabled, .lyricsEnabled) } }
     @Published var lyricsInNotch: Bool { didSet { save(lyricsInNotch, .lyricsInNotch) } }
     @Published var weatherEnabled: Bool { didSet { save(weatherEnabled, .weatherEnabled) } }
@@ -14,13 +17,14 @@ final class AppSettings: ObservableObject {
     @Published var airPodsAlerts: Bool { didSet { save(airPodsAlerts, .airPodsAlerts) } }
 
     private enum Key: String {
-        case lyricsEnabled, lyricsInNotch, weatherEnabled, useFahrenheit, batteryAlerts, airPodsAlerts
+        case showLiveActivity, lyricsEnabled, lyricsInNotch, weatherEnabled, useFahrenheit, batteryAlerts, airPodsAlerts
     }
 
     private let defaults = UserDefaults.standard
 
     private init() {
         defaults.register(defaults: [
+            Key.showLiveActivity.rawValue: false,
             Key.lyricsEnabled.rawValue: true,
             Key.lyricsInNotch.rawValue: false,
             Key.weatherEnabled.rawValue: true,
@@ -28,6 +32,7 @@ final class AppSettings: ObservableObject {
             Key.batteryAlerts.rawValue: true,
             Key.airPodsAlerts.rawValue: true,
         ])
+        showLiveActivity = defaults.bool(forKey: Key.showLiveActivity.rawValue)
         lyricsEnabled = defaults.bool(forKey: Key.lyricsEnabled.rawValue)
         lyricsInNotch = defaults.bool(forKey: Key.lyricsInNotch.rawValue)
         weatherEnabled = defaults.bool(forKey: Key.weatherEnabled.rawValue)

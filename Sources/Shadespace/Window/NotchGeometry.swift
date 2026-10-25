@@ -66,10 +66,24 @@ enum NotchGeometry {
         CGSize(width: expandedWidth, height: collapsedRect(on: screen).height + expandedContentHeight)
     }
 
+    /// Resting size when the island is hidden: exactly the camera housing, so the black shape
+    /// disappears into the hardware. Without a notch there is nothing to draw.
+    static func hiddenSize(on screen: NSScreen) -> CGSize {
+        hasNotch(screen)
+            ? CGSize(width: physicalNotchWidth(on: screen), height: physicalNotchHeight(on: screen))
+            : CGSize(width: collapsedPillWidth, height: 0)
+    }
+
+    /// Top part of a peek alert: the notch itself when hidden, the full collapsed row otherwise.
+    static func peekHeaderHeight(on screen: NSScreen, liveActivity: Bool) -> CGFloat {
+        liveActivity ? collapsedRect(on: screen).height : max(physicalNotchHeight(on: screen), 6)
+    }
+
     /// Size used while a transient alert is showing: wider than the notch, one row taller.
-    static func peekSize(on screen: NSScreen) -> CGSize {
+    static func peekSize(on screen: NSScreen, liveActivity: Bool) -> CGSize {
         let collapsed = collapsedRect(on: screen)
-        return CGSize(width: max(collapsed.width, peekWidth), height: collapsed.height + peekContentHeight)
+        return CGSize(width: max(collapsed.width, peekWidth),
+                      height: peekHeaderHeight(on: screen, liveActivity: liveActivity) + peekContentHeight)
     }
 
     /// Fixed panel frame: large enough for every island size, pinned to the top-center of the screen.

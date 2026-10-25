@@ -71,6 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return item
     }
 
+    @objc private func toggleLiveActivity() { AppSettings.shared.showLiveActivity.toggle() }
     @objc private func toggleLyrics() { AppSettings.shared.lyricsEnabled.toggle() }
     @objc private func toggleLyricsInNotch() { AppSettings.shared.lyricsInNotch.toggle() }
     @objc private func toggleWeather() { AppSettings.shared.weatherEnabled.toggle() }
@@ -88,10 +89,14 @@ extension AppDelegate: NSMenuDelegate {
         let settings = AppSettings.shared
         menu.removeAllItems()
 
+        menu.addItem(sectionHeader("Notch"))
+        menu.addItem(toggleItem("Show Activity Below Notch", settings.showLiveActivity, #selector(toggleLiveActivity)))
+
+        menu.addItem(.separator())
         menu.addItem(sectionHeader("Music"))
         menu.addItem(toggleItem("Synced Lyrics", settings.lyricsEnabled, #selector(toggleLyrics)))
-        let inNotch = toggleItem("Show Lyrics in Notch", settings.lyricsInNotch, #selector(toggleLyricsInNotch))
-        inNotch.isEnabled = settings.lyricsEnabled
+        let inNotch = toggleItem("Show Lyrics Below Notch", settings.lyricsInNotch, #selector(toggleLyricsInNotch))
+        inNotch.isEnabled = settings.lyricsEnabled && settings.showLiveActivity
         menu.addItem(inNotch)
 
         menu.addItem(.separator())

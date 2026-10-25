@@ -130,9 +130,15 @@ final class ShadespaceState: ObservableObject {
 
     /// Size of the visible island for the current state, in points.
     var islandSize: CGSize {
+        let liveActivity = AppSettings.shared.showLiveActivity
         if isExpanded { return NotchGeometry.expandedSize(on: screen) }
-        if alert != nil { return NotchGeometry.peekSize(on: screen) }
-        return NotchGeometry.collapsedRect(on: screen).size
+        if alert != nil { return NotchGeometry.peekSize(on: screen, liveActivity: liveActivity) }
+        if liveActivity { return NotchGeometry.collapsedRect(on: screen).size }
+        return NotchGeometry.hiddenSize(on: screen)
+    }
+
+    var isHidden: Bool {
+        !isExpanded && alert == nil && !AppSettings.shared.showLiveActivity
     }
 
     /// Island frame in screen coordinates; the hover tracker uses it as its hot zone.
@@ -144,6 +150,12 @@ final class ShadespaceState: ObservableObject {
     }
 
     var hotZoneRect: NSRect {
-        isExpanded ? islandScreenRect : islandScreenRect.insetBy(dx: -40, dy: -8)
+        if isExpanded { return islandScreenRect }
+        let rect = islandScreenRect
+        // Hidden on a screen without a notch: a thin band at the top edge reveals the island
+        if rect.height < 8 {
+            return NSRect(x: rect.minX, y: rect.maxY - 8, width: rect.width, height: 8)
+        }
+        return rect.insetBy(dx: isHidden ? -10 : -40, dy: isHidden ? -4 : -8)
     }
 }
