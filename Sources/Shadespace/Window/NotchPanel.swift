@@ -13,7 +13,9 @@ final class NotchPanel: NSPanel {
         isOpaque = false
         backgroundColor = .clear
         hasShadow = false
-        level = .init(rawValue: Int(CGWindowLevelForKey(.maximumWindow)) - 1)
+        // Just above the menu bar. Higher levels (e.g. maximumWindow) sit above the drag-and-drop
+        // machinery and the panel stops receiving file drags.
+        level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.mainMenuWindow)) + 3)
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
         isMovable = false
         hidesOnDeactivate = false

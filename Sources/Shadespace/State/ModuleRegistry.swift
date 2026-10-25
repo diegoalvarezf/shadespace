@@ -1,7 +1,5 @@
 import Combine
 import Foundation
-import SwiftUI
-import UniformTypeIdentifiers
 
 @MainActor
 final class ModuleRegistry: ObservableObject {
@@ -37,33 +35,27 @@ final class ModuleRegistry: ObservableObject {
         nowPlaying.start()
     }
 
-    /// Routes a drop to the module behind the chosen zone. When the zone can't take the file
-    /// (e.g. an image on "Summarize") it falls back to the tray, so a drop is never lost.
-    func handleDrop(_ providers: [NSItemProvider], zone: DropZone) -> Bool {
-        let fileProviders = providers.filter { $0.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) }
-        guard !fileProviders.isEmpty else { return false }
-
-        if zone == .tray { return tray.handleDrop(providers: fileProviders) }
-
-        Task {
-            guard let url = await FileTrayStore.loadFileURL(from: fileProviders[0]) else { return }
-            switch zone {
-            case .summarize where AISummarizer.canSummarize(url):
-                ai.summarize(url: url)
-            case .convert where FileConverterStore.canConvert(url):
-                fileConverter.convert(url: url)
-            default:
-                tray.add([url])
-            }
+    /// Routes dropped files to the module behind the chosen zone. When the zone can't take the
+    /// file (e.g. an image on "Summarize") it goes to the tray, so a drop is never lost.
+    func handleDrop(_ urls: [URL], zone: DropZone) -> Bool {
+        guard let first = urls.first else { return false }
+        switch zone {
+        case .summarize where AISummarizer.canSummarize(first):
+            ai.summarize(url: first)
+        case .convert where FileConverterStore.canConvert(first):
+            fileConverter.convert(url: first)
+        default:
+            tray.add(urls)
         }
         return true
     }
 
-    /// Which zones make sense for what is being dragged, used to dim the others.
-    static func supportedZones(for info: DropInfo) -> Set<DropZone> {
+    /// Which zones make sense for the dragged files, used to dim the others.
+    static func supportedZones(for urls: [URL]) -> Set<DropZone> {
         var zones: Set<DropZone> = [.tray]
-        if info.hasItemsConforming(to: [.pdf, .text, .rtf]) { zones.insert(.summarize) }
-        if info.hasItemsConforming(to: [.image]) { zones.insert(.convert) }
+        guard let first = urls.first else { return zones }
+        if AISummarizer.canSummarize(first) { zones.insert(.summarize) }
+        if FileConverterStore.canConvert(first) { zones.insert(.convert) }
         return zones
     }
 }

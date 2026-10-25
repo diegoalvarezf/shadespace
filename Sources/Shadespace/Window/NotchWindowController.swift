@@ -30,13 +30,19 @@ final class NotchWindowController {
                 .environmentObject(AppSettings.shared)
                 .preferredColorScheme(.dark)
         )
+        // File drags are received by an AppKit container around the SwiftUI content
+        let dropView = DropCatcherView(frame: NSRect(origin: .zero, size: panel.frame.size))
+        dropView.autoresizingMask = [.width, .height]
+        hostingView.frame = dropView.bounds
         hostingView.autoresizingMask = [.width, .height]
-        panel.contentView = hostingView
+        dropView.addSubview(hostingView)
+        panel.contentView = dropView
 
         // Transparent everywhere except the island, which only takes the mouse while hovered.
         panel.ignoresMouseEvents = true
 
         bindState()
+        setupDrop(dropView)
         setupHoverTracker()
         setupScrollGesture()
         observeScreenChanges()
@@ -60,6 +66,43 @@ final class NotchWindowController {
                 }
             }
             .store(in: &cancellables)
+    }
+
+    private func setupDrop(_ view: DropCatcherView) {
+        // Drop zones are laid out across the expanded island, which is top-centered in the panel
+        let expandedRect: (NSView) -> NSRect = { [weak self] view in
+            guard let self else { return .zero }
+            let size = NotchGeometry.expandedSize(on: self.state.screen)
+            return NSRect(x: view.bounds.midX - size.width / 2, y: view.bounds.maxY - size.height,
+                          width: size.width, height: size.height)
+        }
+        view.acceptsDrop = { [weak view] point in
+            guard let view else { return false }
+            return expandedRect(view).contains(point)
+        }
+        view.onEnter = { [weak self] urls in
+            guard let self else { return }
+            self.state.supportedDropZones = ModuleRegistry.supportedZones(for: urls)
+            self.state.dragEntered()
+        }
+        view.onMove = { [weak self, weak view] point in
+            guard let self, let view else { return }
+            let rect = expandedRect(view)
+            let zones = DropZone.allCases
+            let index = Int((point.x - rect.minX) / rect.width * CGFloat(zones.count))
+            let zone = zones[min(max(index, 0), zones.count - 1)]
+            if self.state.hoveredDropZone != zone { self.state.hoveredDropZone = zone }
+        }
+        view.onExit = { [weak self] in self?.state.dragExited() }
+        view.onDrop = { [weak self] urls in
+            guard let self else { return false }
+            // A zone that can't take these files falls back to the tray
+            let hovered = self.state.hoveredDropZone ?? .tray
+            let zone = self.state.supportedDropZones.contains(hovered) ? hovered : .tray
+            let handled = self.modules.handleDrop(urls, zone: zone)
+            self.state.dragExited()
+            return handled
+        }
     }
 
     private func setupHoverTracker() {

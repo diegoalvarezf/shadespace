@@ -143,3 +143,16 @@ final class StatusModelTests: XCTestCase {
         XCTAssertFalse(AirPodsStatus(name: "X").hasBattery)
     }
 }
+
+@MainActor
+final class DropRoutingTests: XCTestCase {
+    func testSupportedZonesDependOnFileType() {
+        let image = [URL(fileURLWithPath: "/tmp/photo.png")]
+        let pdf = [URL(fileURLWithPath: "/tmp/paper.pdf")]
+        let zip = [URL(fileURLWithPath: "/tmp/archive.zip")]
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: image), [.convert, .tray])
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: pdf), [.summarize, .tray])
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: zip), [.tray])
+        XCTAssertEqual(ModuleRegistry.supportedZones(for: []), [.tray])
+    }
+}

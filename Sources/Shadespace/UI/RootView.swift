@@ -1,5 +1,4 @@
 import SwiftUI
-import UniformTypeIdentifiers
 
 /// Fills the fixed, transparent panel and draws the island at the top-center.
 /// The panel never resizes; the island's size animates here.
@@ -67,7 +66,6 @@ struct RootView: View {
                 contentScale = 1.0
             }
         }
-        .onDrop(of: [UTType.fileURL], delegate: IslandDropDelegate(state: state, modules: modules))
     }
 
     // MARK: - Expanded content
@@ -395,6 +393,7 @@ private struct DropZonesView: View {
 
     private func zone(_ zone: DropZone, symbol: String, title: String, subtitle: String) -> some View {
         let hovered = state.hoveredDropZone == zone
+        let supported = state.supportedDropZones.contains(zone)
         return VStack(spacing: 6) {
             Image(systemName: symbol)
                 .font(.system(size: 18, weight: .medium))
@@ -414,49 +413,10 @@ private struct DropZonesView: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .strokeBorder(.white.opacity(hovered ? 0.4 : 0.1), style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
         )
-        .scaleEffect(hovered ? 1.03 : 1)
+        .scaleEffect(hovered && supported ? 1.03 : 1)
+        // Zones that can't take the dragged file are dimmed; dropping there sends it to the tray
+        .opacity(supported ? 1 : 0.35)
         .animation(.spring(response: 0.25, dampingFraction: 0.7), value: hovered)
-    }
-}
-
-/// Expands the island on drag-enter and picks a zone from the pointer's horizontal position.
-private struct IslandDropDelegate: DropDelegate {
-    let state: ShadespaceState
-    let modules: ModuleRegistry
-
-    func validateDrop(info: DropInfo) -> Bool {
-        info.hasItemsConforming(to: [.fileURL])
-    }
-
-    func dropEntered(info: DropInfo) {
-        state.dragEntered()
-        updateZone(info)
-    }
-
-    func dropUpdated(info: DropInfo) -> DropProposal? {
-        updateZone(info)
-        return DropProposal(operation: .copy)
-    }
-
-    func dropExited(info: DropInfo) {
-        state.dragExited()
-    }
-
-    func performDrop(info: DropInfo) -> Bool {
-        // Zones that can't take this file fall back to the tray
-        let supported = ModuleRegistry.supportedZones(for: info)
-        let zone = state.hoveredDropZone.flatMap { supported.contains($0) ? $0 : nil } ?? .tray
-        let handled = modules.handleDrop(info.itemProviders(for: [.fileURL]), zone: zone)
-        state.dragExited()
-        return handled
-    }
-
-    private func updateZone(_ info: DropInfo) {
-        let zones = DropZone.allCases
-        // The island expands on drag-enter, so zones are laid out across the expanded width
-        let index = Int(info.location.x / NotchGeometry.expandedWidth * CGFloat(zones.count))
-        let zone = zones[min(max(index, 0), zones.count - 1)]
-        if state.hoveredDropZone != zone { state.hoveredDropZone = zone }
     }
 }
 

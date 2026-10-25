@@ -45,6 +45,8 @@ final class ShadespaceState: ObservableObject {
     @Published private(set) var alert: IslandAlert?
     @Published private(set) var isDragging = false
     @Published var hoveredDropZone: DropZone?
+    /// Zones that can take what is being dragged; the others are dimmed.
+    @Published var supportedDropZones: Set<DropZone> = Set(DropZone.allCases)
 
     private var collapseTask: Task<Void, Never>?
     private var hoverExpandTask: Task<Void, Never>?

@@ -1,5 +1,4 @@
 import AppKit
-import UniformTypeIdentifiers
 
 struct TrayItem: Identifiable, Equatable {
     let url: URL
@@ -22,20 +21,6 @@ final class FileTrayStore: ObservableObject {
         let paths = UserDefaults.standard.stringArray(forKey: Self.defaultsKey) ?? []
         items = paths.map { TrayItem(url: URL(fileURLWithPath: $0)) }
         pruneMissing()
-    }
-
-    func handleDrop(providers: [NSItemProvider]) -> Bool {
-        let fileProviders = providers.filter { $0.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) }
-        guard !fileProviders.isEmpty else { return false }
-
-        Task {
-            var urls: [URL] = []
-            for provider in fileProviders {
-                if let url = await Self.loadFileURL(from: provider) { urls.append(url) }
-            }
-            add(urls)
-        }
-        return true
     }
 
     func add(_ urls: [URL]) {
@@ -75,19 +60,5 @@ final class FileTrayStore: ObservableObject {
 
     private func save() {
         UserDefaults.standard.set(items.map(\.url.path), forKey: Self.defaultsKey)
-    }
-
-    static func loadFileURL(from provider: NSItemProvider) async -> URL? {
-        await withCheckedContinuation { cont in
-            provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { item, _ in
-                if let url = item as? URL {
-                    cont.resume(returning: url)
-                } else if let data = item as? Data, let url = URL(dataRepresentation: data, relativeTo: nil) {
-                    cont.resume(returning: url)
-                } else {
-                    cont.resume(returning: nil)
-                }
-            }
-        }
     }
 }

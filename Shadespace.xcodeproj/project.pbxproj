@@ -29,6 +29,7 @@
 		BAC44E984EDC7EBCB7A37F1F /* ShadespaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */; };
 		BB7A79E0EDDB9D57DB29A3DC /* AISummarizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */; };
 		D0D3A410DB55479DB54BB120 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7197957FCF021586B7D86234 /* NotchGeometry.swift */; };
+		D3F443CC709F2BC9EF5D6427 /* DropCatcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F483162305A122FE8AC65A1 /* DropCatcherView.swift */; };
 		D41B23B0FFF0012AD6C58F62 /* LyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33DC3F1C440BE2E459B66E0 /* LyricsService.swift */; };
 		F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11488F7C69945BBB20C5463D /* AIModuleStore.swift */; };
 		FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503CAF85874106724D56662D /* NowPlayingViewModel.swift */; };
@@ -58,6 +59,7 @@
 		5A2C872DB288C859E9C6539C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FAFA67BD6BE0437D2CCC695 /* FileTrayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTrayStore.swift; sourceTree = "<group>"; };
 		6D964B0BCA6FBF83BDDA45D9 /* AirPodsMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPodsMonitor.swift; sourceTree = "<group>"; };
+		6F483162305A122FE8AC65A1 /* DropCatcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropCatcherView.swift; sourceTree = "<group>"; };
 		7197957FCF021586B7D86234 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
 		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F98EF396D9E30835577A3F0 /* FileTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTrayView.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		065AC9334D713A2BC01BE973 /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				6F483162305A122FE8AC65A1 /* DropCatcherView.swift */,
 				BDA2106F58391FE241071DEB /* HoverTracker.swift */,
 				7197957FCF021586B7D86234 /* NotchGeometry.swift */,
 				1E9A9C4EC2101CCD0297F0C7 /* NotchPanel.swift */,
@@ -357,6 +360,7 @@
 				8CDA8B25C45807BA65AF99D6 /* AppSettings.swift in Sources */,
 				31B782D4BDEC6BC150A512E3 /* BatteryMonitor.swift in Sources */,
 				7E01DBFAA25FD50251347319 /* Components.swift in Sources */,
+				D3F443CC709F2BC9EF5D6427 /* DropCatcherView.swift in Sources */,
 				4CB49DD8D770BC6C359294AD /* FileConverterStore.swift in Sources */,
 				3D468C79E499BF0C32B8F375 /* FileTrayStore.swift in Sources */,
 				59A601E4130A541F0D5109A8 /* FileTrayView.swift in Sources */,
