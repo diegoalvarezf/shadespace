@@ -25,7 +25,13 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Shadespace uses Apple Events to read Spotify playback and toggle Focus.</string>
+	<string>Shadespace uses Apple Events to show and control what's playing in Spotify and Music.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Shadespace shows your AirPods' battery when they connect.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Shadespace uses your approximate location to show the local weather.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Shadespace uses your approximate location to show the local weather.</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<false/>
 	<key>NSSupportsSuddenTermination</key>
