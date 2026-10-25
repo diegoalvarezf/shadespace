@@ -16,6 +16,12 @@ struct FileTrayView: View {
                     .opacity(0.6)
                 Spacer()
                 if !items.isEmpty {
+                    Button(action: { AirDropService.send(items.map(\.url)) }) {
+                        Label("AirDrop All", systemImage: "dot.radiowaves.left.and.right").labelStyle(.iconOnly)
+                    }
+                    .font(.system(size: 10))
+                    .buttonStyle(.plain)
+                    .help("AirDrop all files")
                     Button("Clear") { modules.tray.clear() }
                         .font(.system(size: 10))
                         .buttonStyle(.plain)
@@ -90,6 +96,7 @@ private struct TrayItemView: View {
         .contextMenu {
             Button("Open") { modules.tray.open(item) }
             Button("Show in Finder") { modules.tray.reveal(item) }
+            Button("AirDrop") { AirDropService.send([item.url]) }
             Divider()
             Button("Remove from Tray") { modules.tray.remove(item) }
         }

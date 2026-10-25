@@ -386,6 +386,7 @@ private struct DropZonesView: View {
         HStack(spacing: 8) {
             zone(.summarize, symbol: "sparkles", title: "Summarize", subtitle: "PDF, text")
             zone(.convert, symbol: "arrow.triangle.2.circlepath", title: "Convert", subtitle: "PNG ↔ JPG")
+            zone(.airDrop, symbol: "dot.radiowaves.left.and.right", title: "AirDrop", subtitle: "Send nearby")
             zone(.tray, symbol: "tray.and.arrow.down", title: "Tray", subtitle: "Keep for later")
         }
         .padding(12)

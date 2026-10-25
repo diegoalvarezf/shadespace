@@ -44,6 +44,8 @@ final class ModuleRegistry: ObservableObject {
             ai.summarize(url: first)
         case .convert where FileConverterStore.canConvert(first):
             fileConverter.convert(url: first)
+        case .airDrop:
+            AirDropService.send(urls)
         default:
             tray.add(urls)
         }
@@ -54,6 +56,7 @@ final class ModuleRegistry: ObservableObject {
     static func supportedZones(for urls: [URL]) -> Set<DropZone> {
         var zones: Set<DropZone> = [.tray]
         guard let first = urls.first else { return zones }
+        if AirDropService.isAvailable { zones.insert(.airDrop) }
         if AISummarizer.canSummarize(first) { zones.insert(.summarize) }
         if FileConverterStore.canConvert(first) { zones.insert(.convert) }
         return zones

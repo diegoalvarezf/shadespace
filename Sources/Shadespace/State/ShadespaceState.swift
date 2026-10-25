@@ -31,6 +31,7 @@ enum IslandPage: Equatable {
 enum DropZone: CaseIterable, Equatable {
     case summarize
     case convert
+    case airDrop
     case tray
 }
 
