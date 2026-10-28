@@ -29,8 +29,14 @@ struct AgentsView: View {
             if let error = modules.agents.serverError {
                 placeholder(symbol: "exclamationmark.triangle", text: error)
             } else if !isConnected {
-                VStack(spacing: 8) {
-                    placeholder(symbol: "link", text: "See your Claude Code sessions here")
+                VStack(spacing: 10) {
+                    VStack(spacing: 6) {
+                        Image(systemName: "link")
+                            .font(.system(size: 18, weight: .light))
+                        Text("See your Claude Code sessions here")
+                            .font(.system(size: 11))
+                    }
+                    .foregroundStyle(.white.opacity(0.3))
                     Button("Connect Claude Code") {
                         isConnected = ClaudeCodeConnection.connect()
                     }

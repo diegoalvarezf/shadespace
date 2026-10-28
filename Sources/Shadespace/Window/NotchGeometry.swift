@@ -1,7 +1,7 @@
 import AppKit
 
 enum NotchGeometry {
-    static let expandedWidth: CGFloat = 380
+    static let expandedWidth: CGFloat = 440
     static let expandedContentHeight: CGFloat = 170
     static let collapsedPillWidth: CGFloat = 200
     static let collapsedPillHeight: CGFloat = 37

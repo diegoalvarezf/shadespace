@@ -319,14 +319,15 @@ private struct ExpandedHeader: View {
 
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                HStack(spacing: 4) {
+                // Four pages must fit beside the camera housing, so keep these tight
+                HStack(spacing: 2) {
                     pageButton(.nowPlaying, symbol: "music.note")
                     pageButton(.pomodoro, symbol: "timer", indicator: modules.pomodoro.isRunning)
                     pageButton(.agents, symbol: "terminal", indicator: modules.agents.needsInput)
                     pageButton(.tray, symbol: "tray.full", badge: modules.tray.items.count)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 14)
+                .padding(.leading, 12)
 
                 Color.clear.frame(width: notchW)
 
