@@ -347,7 +347,7 @@ private struct StatusSummaryContent: View {
     @ObservedObject var battery: BatteryMonitor
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 6) {
             if let w = weather.weather {
                 HStack(spacing: 3) {
                     Image(systemName: w.symbol)
@@ -362,9 +362,13 @@ private struct StatusSummaryContent: View {
                     BatteryIcon(percent: battery.batteryPercent, charging: battery.isOnAC)
                     Text("\(battery.batteryPercent)%")
                         .font(.system(size: 10, weight: .medium, design: .rounded))
+                        .monospacedDigit()
                 }
             }
         }
+        // The space beside the notch is narrow: keep everything on one line
+        .lineLimit(1)
+        .fixedSize(horizontal: true, vertical: false)
         .foregroundStyle(.white.opacity(0.6))
     }
 }
