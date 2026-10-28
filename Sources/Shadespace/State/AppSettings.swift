@@ -15,10 +15,12 @@ final class AppSettings: ObservableObject {
     @Published var useFahrenheit: Bool { didSet { save(useFahrenheit, .useFahrenheit) } }
     @Published var batteryAlerts: Bool { didSet { save(batteryAlerts, .batteryAlerts) } }
     @Published var airPodsAlerts: Bool { didSet { save(airPodsAlerts, .airPodsAlerts) } }
+    /// The pixel bot lives beside the notch even when nothing else is going on.
+    @Published var companionEnabled: Bool { didSet { save(companionEnabled, .companionEnabled) } }
     @Published var botColor: BotColor { didSet { defaults.set(botColor.rawValue, forKey: Key.botColor.rawValue) } }
 
     private enum Key: String {
-        case showLiveActivity, lyricsEnabled, lyricsInNotch, weatherEnabled, useFahrenheit, batteryAlerts, airPodsAlerts, botColor
+        case showLiveActivity, lyricsEnabled, lyricsInNotch, weatherEnabled, useFahrenheit, batteryAlerts, airPodsAlerts, botColor, companionEnabled
     }
 
     private let defaults = UserDefaults.standard
@@ -32,6 +34,7 @@ final class AppSettings: ObservableObject {
             Key.useFahrenheit.rawValue: false,
             Key.batteryAlerts.rawValue: true,
             Key.airPodsAlerts.rawValue: true,
+            Key.companionEnabled.rawValue: true,
         ])
         showLiveActivity = defaults.bool(forKey: Key.showLiveActivity.rawValue)
         lyricsEnabled = defaults.bool(forKey: Key.lyricsEnabled.rawValue)
@@ -40,6 +43,7 @@ final class AppSettings: ObservableObject {
         useFahrenheit = defaults.bool(forKey: Key.useFahrenheit.rawValue)
         batteryAlerts = defaults.bool(forKey: Key.batteryAlerts.rawValue)
         airPodsAlerts = defaults.bool(forKey: Key.airPodsAlerts.rawValue)
+        companionEnabled = defaults.bool(forKey: Key.companionEnabled.rawValue)
         botColor = BotColor(rawValue: defaults.string(forKey: Key.botColor.rawValue) ?? "") ?? .cyan
     }
 

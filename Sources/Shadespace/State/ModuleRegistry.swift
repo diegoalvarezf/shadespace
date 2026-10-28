@@ -13,6 +13,7 @@ final class ModuleRegistry: ObservableObject {
     let volume: SystemVolume
     let pomodoro: PomodoroTimer
     let agents: AgentSessionStore
+    let companion: BotCompanion
     private var cancellables = Set<AnyCancellable>()
 
     init(state: ShadespaceState) {
@@ -26,12 +27,14 @@ final class ModuleRegistry: ObservableObject {
         self.volume = SystemVolume()
         self.pomodoro = PomodoroTimer(state: state)
         self.agents = AgentSessionStore(state: state)
+        self.companion = BotCompanion(state: state)
 
         // Views observe the registry, so republish every module's changes through it
         let publishers: [ObservableObjectPublisher] = [
             nowPlaying.objectWillChange, ai.objectWillChange, fileConverter.objectWillChange,
             tray.objectWillChange, battery.objectWillChange, weather.objectWillChange,
             volume.objectWillChange, pomodoro.objectWillChange, agents.objectWillChange,
+            companion.objectWillChange,
         ]
         for publisher in publishers {
             publisher
@@ -40,6 +43,7 @@ final class ModuleRegistry: ObservableObject {
         }
 
         nowPlaying.start()
+        companion.start(modules: self)
     }
 
     /// Routes dropped files to the module behind the chosen zone. When the zone can't take the

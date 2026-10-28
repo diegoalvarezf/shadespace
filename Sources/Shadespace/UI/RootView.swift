@@ -12,6 +12,10 @@ struct RootView: View {
         ZStack(alignment: .top) {
             Color.clear
             island
+                .offset(x: state.islandOffsetX)
+                .animation(.spring(response: 0.45, dampingFraction: 0.8), value: state.islandOffsetX)
+            // The bot is drawn above the island so it can move freely between its perches
+            CompanionLayer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
@@ -129,7 +133,7 @@ private struct CollapsedNotchRow: View {
                 ZStack {
                     if state.pomodoroActive {
                         PixelBot(mood: modules.pomodoro.mood, focusColor: settings.botColor.color).frame(width: 30, height: 30)
-                    } else if state.mode == .idle, let img = modules.nowPlaying.artwork {
+                    } else if state.mode == .idle, !settings.companionEnabled, let img = modules.nowPlaying.artwork {
                         Image(nsImage: img)
                             .resizable()
                             .scaledToFill()
@@ -175,13 +179,15 @@ private struct ActivityEars: View {
 
     var body: some View {
         let notchW = NotchGeometry.hasNotch(state.screen) ? NotchGeometry.physicalNotchWidth(on: state.screen) : 0
-        let agent = state.agentsActive ? modules.agents.primarySession : nil
         HStack(spacing: 0) {
-            PixelBot(mood: agent?.botMood ?? modules.pomodoro.mood, focusColor: settings.botColor.color)
-                .frame(width: 30, height: 30)
+            // The bot itself is drawn by CompanionLayer, which perches it on this side
+            Color.clear
                 .frame(maxWidth: .infinity)
             Color.clear.frame(width: notchW)
-            Group {
+            // Always occupies its side, even when empty: an empty side collapses and slides
+            // the bot under the camera housing
+            ZStack {
+                Color.clear
                 if state.pomodoroActive {
                     PomodoroCountdown()
                 } else if modules.agents.visibleSessions.count > 1 {
@@ -336,35 +342,44 @@ private struct ExpandedHeader: View {
                     .padding(.trailing, 14)
             }
             .frame(height: physH > 0 ? physH : collapsedHeight)
-            Spacer(minLength: 0)
+            // Strip below the camera: the bot strolls here, its vitals sit on the right
+            HStack {
+                Spacer()
+                if settings.companionEnabled && physH > 0 {
+                    CompanionVitals(life: modules.companion.life)
+                        .padding(.trailing, 14)
+                }
+            }
+            .frame(maxHeight: .infinity)
         }
         .frame(height: collapsedHeight)
     }
 
+    /// Fixed-width page button. Indicators sit on the icon's corner so they never add width
+    /// and push the last button under the camera housing.
     private func pageButton(_ page: IslandPage, symbol: String, badge: Int = 0, indicator: Bool = false) -> some View {
         let selected = state.mode == .idle && state.page == page
         return Button {
             if state.mode != .idle { return }
             state.page = page
         } label: {
-            HStack(spacing: 3) {
-                Image(systemName: symbol)
-                    .font(.system(size: 10, weight: .semibold))
-                if indicator {
-                    Circle().fill(settings.botColor.color).frame(width: 4, height: 4)
+            Image(systemName: symbol)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(.white.opacity(selected ? 0.9 : 0.35))
+                .frame(width: 24, height: 20)
+                .background(Capsule().fill(.white.opacity(selected ? 0.12 : 0)))
+                .overlay(alignment: .topTrailing) {
+                    if indicator || badge > 0 {
+                        Circle()
+                            .fill(indicator ? settings.botColor.color : .white.opacity(0.6))
+                            .frame(width: 5, height: 5)
+                            .offset(x: -2, y: 2)
+                    }
                 }
-                if badge > 0 {
-                    Text("\(badge)")
-                        .font(.system(size: 9, weight: .semibold, design: .rounded))
-                }
-            }
-            .foregroundStyle(.white.opacity(selected ? 0.9 : 0.35))
-            .padding(.horizontal, 7)
-            .frame(height: 20)
-            .background(Capsule().fill(.white.opacity(selected ? 0.12 : 0)))
-            .contentShape(Capsule())
+                .contentShape(Capsule())
         }
         .buttonStyle(.plain)
+        .help(badge > 0 ? "\(badge) items" : "")
     }
 }
 

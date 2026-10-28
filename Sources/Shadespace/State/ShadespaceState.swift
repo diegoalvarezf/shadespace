@@ -53,6 +53,10 @@ final class ShadespaceState: ObservableObject {
     @Published var pomodoroActive = false
     /// A coding agent session is working, waiting for you, or just finished.
     @Published var agentsActive = false
+    /// Where the companion bot perches while the island is collapsed.
+    @Published var companionSide: BotCompanion.Side = .left
+    /// While the bot crosses behind the camera, both sides of the island are shown.
+    @Published var companionCrossing = false
     @Published var hoveredDropZone: DropZone?
     /// Zones that can take what is being dragged; the others are dimmed.
     @Published var supportedDropZones: Set<DropZone> = Set(DropZone.allCases)
@@ -150,13 +154,28 @@ final class ShadespaceState: ObservableObject {
         if liveActivity { return NotchGeometry.collapsedRect(on: screen).size }
         if agentsActive { return NotchGeometry.agentActivitySize(on: screen) }
         if pomodoroActive { return NotchGeometry.activitySize(on: screen) }
+        if AppSettings.shared.companionEnabled {
+            return companionCrossing
+                ? NotchGeometry.activitySize(on: screen)
+                : NotchGeometry.companionSize(on: screen)
+        }
         return NotchGeometry.hiddenSize(on: screen)
+    }
+
+    /// Horizontal shift of the island: with only the bot showing, it extends to one side.
+    var islandOffsetX: CGFloat {
+        guard !isExpanded, alert == nil, !agentsActive, !pomodoroActive, !companionCrossing,
+              !AppSettings.shared.showLiveActivity, AppSettings.shared.companionEnabled else { return 0 }
+        let shift = NotchGeometry.companionExtension(on: screen) / 2
+        return companionSide == .left ? -shift : shift
     }
 
     /// Top row of a peek alert: the bot row when an activity is running, else just the notch.
     var peekHeaderHeight: CGFloat {
         if AppSettings.shared.showLiveActivity { return NotchGeometry.collapsedRect(on: screen).height }
-        if agentsActive || pomodoroActive { return NotchGeometry.earsHeight(on: screen) }
+        if agentsActive || pomodoroActive || AppSettings.shared.companionEnabled {
+            return NotchGeometry.earsHeight(on: screen)
+        }
         return NotchGeometry.peekHeaderHeight(on: screen, liveActivity: false)
     }
 
@@ -168,7 +187,7 @@ final class ShadespaceState: ObservableObject {
     var islandScreenRect: NSRect {
         let canvas = NotchGeometry.canvasRect(on: screen)
         let size = islandSize
-        return NSRect(x: canvas.midX - size.width / 2, y: canvas.maxY - size.height,
+        return NSRect(x: canvas.midX - size.width / 2 + islandOffsetX, y: canvas.maxY - size.height,
                       width: size.width, height: size.height)
     }
 

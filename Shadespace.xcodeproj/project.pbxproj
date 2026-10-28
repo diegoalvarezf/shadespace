@@ -20,16 +20,19 @@
 		3FE1B585825874A1E5F770F3 /* ShadespaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBDACED87980018DA716145 /* ShadespaceTests.swift */; };
 		4CB49DD8D770BC6C359294AD /* FileConverterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA8491CEBD55ADDE4008E37 /* FileConverterStore.swift */; };
 		4CE723B1F278A9B36DF3E0CA /* ShadespaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC69C3CF45D4674269DD1B /* ShadespaceState.swift */; };
+		4F33ACBF969083F55575F36A /* PixelBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0280B3E6CF8C43CB9A44BD5 /* PixelBot.swift */; };
 		57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40E111E1766F5F682DD350 /* NowPlayingView.swift */; };
 		59A601E4130A541F0D5109A8 /* FileTrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F98EF396D9E30835577A3F0 /* FileTrayView.swift */; };
 		5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0DF9A4B2BCA79DF95CBFD /* NotchWindowController.swift */; };
 		649FBD847CFEE3AA80B6F160 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3F4E7B02DBC35D65F1A8B6 /* WeatherService.swift */; };
 		66D1CD801298B05F9924DD4F /* HoverTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2106F58391FE241071DEB /* HoverTracker.swift */; };
+		707F2C856CBAB03CB5D5A724 /* CompanionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB1A8CF71527C2A3856642 /* CompanionLayer.swift */; };
 		76B411B78F05C43F674D92A6 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C5363AF031BD4D73A1A86 /* RootView.swift */; };
 		7E01DBFAA25FD50251347319 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F2C0D2F1023A0F41278FA /* Components.swift */; };
 		8B1A02D54260E982C0215562 /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00932D146EF9F2BB96DE13F4 /* PomodoroView.swift */; };
 		8CDA8B25C45807BA65AF99D6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAAB7C06CDD1917B0AC67E9 /* AppSettings.swift */; };
 		8F37E65E390209A2913D6786 /* SystemVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB853B9A8D6DE1943817D2F8 /* SystemVolume.swift */; };
+		9DC8FD30D4F0047E87CA6B05 /* BotLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC95DB3DF05FD6D309518C4 /* BotLife.swift */; };
 		9E64A2885BEAC12FAD942E77 /* AirDropService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE1D428041A384F230448E /* AirDropService.swift */; };
 		A14EBCB00A650D941A83A165 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A2C872DB288C859E9C6539C /* Assets.xcassets */; };
 		BA6A1740F1E3FD93BC920A73 /* AgentHookServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDA9810C45F1E33F275B863 /* AgentHookServer.swift */; };
@@ -41,8 +44,8 @@
 		D41B23B0FFF0012AD6C58F62 /* LyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33DC3F1C440BE2E459B66E0 /* LyricsService.swift */; };
 		E1A79547BCA2FEB665172358 /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */; };
 		F1C51A0D9C01C94E24C2AC11 /* AIModuleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11488F7C69945BBB20C5463D /* AIModuleStore.swift */; };
+		F4EA2109831C2BCDBB2138E7 /* BotCompanion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3781828DB52FD467BDD4BCE /* BotCompanion.swift */; };
 		FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503CAF85874106724D56662D /* NowPlayingViewModel.swift */; };
-		FFAC138D017C45705D0BD660 /* PixelBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91240E1705D38C64BD80C6C5 /* PixelBot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,12 +80,13 @@
 		72A3CEA5D28871062B54C98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7E31E5CBFED36A888C67003A /* ClaudeCodeHooksInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeHooksInstaller.swift; sourceTree = "<group>"; };
 		7F98EF396D9E30835577A3F0 /* FileTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTrayView.swift; sourceTree = "<group>"; };
-		91240E1705D38C64BD80C6C5 /* PixelBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelBot.swift; sourceTree = "<group>"; };
+		9DC95DB3DF05FD6D309518C4 /* BotLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotLife.swift; sourceTree = "<group>"; };
 		9DF986C1F462EE9A0030F334 /* Shadespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shadespace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceApp.swift; sourceTree = "<group>"; };
 		9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		A57975F8252DB18C9C8A7110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A76C5363AF031BD4D73A1A86 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AABB1A8CF71527C2A3856642 /* CompanionLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionLayer.swift; sourceTree = "<group>"; };
 		ABCB11603AA4E4887C5A6388 /* ModuleRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleRegistry.swift; sourceTree = "<group>"; };
 		AC01DABB356ACEAC50EDC78B /* ShadespaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShadespaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAAB7C06CDD1917B0AC67E9 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -90,7 +94,9 @@
 		BCDBAAA402BAC5B4378CC3FB /* AgentSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSessionStore.swift; sourceTree = "<group>"; };
 		BDA2106F58391FE241071DEB /* HoverTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverTracker.swift; sourceTree = "<group>"; };
 		BDBDACED87980018DA716145 /* ShadespaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadespaceTests.swift; sourceTree = "<group>"; };
+		C0280B3E6CF8C43CB9A44BD5 /* PixelBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelBot.swift; sourceTree = "<group>"; };
 		C33DC3F1C440BE2E459B66E0 /* LyricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsService.swift; sourceTree = "<group>"; };
+		C3781828DB52FD467BDD4BCE /* BotCompanion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotCompanion.swift; sourceTree = "<group>"; };
 		CD85AFD42F5C421A0B6CF4FF /* AISummarizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISummarizer.swift; sourceTree = "<group>"; };
 		DB853B9A8D6DE1943817D2F8 /* SystemVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemVolume.swift; sourceTree = "<group>"; };
 		DCDA9810C45F1E33F275B863 /* AgentHookServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentHookServer.swift; sourceTree = "<group>"; };
@@ -145,6 +151,17 @@
 				9FCCCAD7FF5096A0F5C31FF3 /* ShadespaceApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		25CB805F616566F2A4D730E9 /* Companion */ = {
+			isa = PBXGroup;
+			children = (
+				C3781828DB52FD467BDD4BCE /* BotCompanion.swift */,
+				9DC95DB3DF05FD6D309518C4 /* BotLife.swift */,
+				AABB1A8CF71527C2A3856642 /* CompanionLayer.swift */,
+				C0280B3E6CF8C43CB9A44BD5 /* PixelBot.swift */,
+			);
+			path = Companion;
 			sourceTree = "<group>";
 		};
 		34401403C0D9F17E12F40629 /* Shadespace */ = {
@@ -212,6 +229,7 @@
 				99A9B0C60A3F88447534D849 /* AI */,
 				3DCE37F24EFEB624B39D7A7A /* AirPods */,
 				1CC5145E7D871F30E97D2D8B /* Battery */,
+				25CB805F616566F2A4D730E9 /* Companion */,
 				832974B8768410186B93ABB4 /* Files */,
 				EF19B781B5CE7EBE65BEABF6 /* NowPlaying */,
 				6EC41C38ABF22F49DD14CBE6 /* Pomodoro */,
@@ -225,7 +243,6 @@
 		6EC41C38ABF22F49DD14CBE6 /* Pomodoro */ = {
 			isa = PBXGroup;
 			children = (
-				91240E1705D38C64BD80C6C5 /* PixelBot.swift */,
 				9FE0C874ED4979056FF699C1 /* PomodoroTimer.swift */,
 				00932D146EF9F2BB96DE13F4 /* PomodoroView.swift */,
 			);
@@ -418,7 +435,10 @@
 				27A8648A0523B043EB783435 /* AppDelegate.swift in Sources */,
 				8CDA8B25C45807BA65AF99D6 /* AppSettings.swift in Sources */,
 				31B782D4BDEC6BC150A512E3 /* BatteryMonitor.swift in Sources */,
+				F4EA2109831C2BCDBB2138E7 /* BotCompanion.swift in Sources */,
+				9DC8FD30D4F0047E87CA6B05 /* BotLife.swift in Sources */,
 				2C7D765838CA267E5FEDB425 /* ClaudeCodeHooksInstaller.swift in Sources */,
+				707F2C856CBAB03CB5D5A724 /* CompanionLayer.swift in Sources */,
 				7E01DBFAA25FD50251347319 /* Components.swift in Sources */,
 				D3F443CC709F2BC9EF5D6427 /* DropCatcherView.swift in Sources */,
 				4CB49DD8D770BC6C359294AD /* FileConverterStore.swift in Sources */,
@@ -433,7 +453,7 @@
 				5B82B133606C4BE2FCA8F0BA /* NotchWindowController.swift in Sources */,
 				57CD0431E7D64FE5EFDF3E3D /* NowPlayingView.swift in Sources */,
 				FF374B21FBC1B03AAAA0C4B4 /* NowPlayingViewModel.swift in Sources */,
-				FFAC138D017C45705D0BD660 /* PixelBot.swift in Sources */,
+				4F33ACBF969083F55575F36A /* PixelBot.swift in Sources */,
 				E1A79547BCA2FEB665172358 /* PomodoroTimer.swift in Sources */,
 				8B1A02D54260E982C0215562 /* PomodoroView.swift in Sources */,
 				76B411B78F05C43F674D92A6 /* RootView.swift in Sources */,

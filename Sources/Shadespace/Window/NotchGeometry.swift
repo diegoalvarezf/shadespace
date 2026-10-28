@@ -81,6 +81,17 @@ enum NotchGeometry {
             : CGSize(width: 150, height: 26)
     }
 
+    /// Room for the companion bot beside the camera housing.
+    static func companionExtension(on screen: NSScreen) -> CGFloat {
+        hasNotch(screen) ? leftExtension(on: screen) : 40
+    }
+
+    /// Notch plus one side for the bot.
+    static func companionSize(on screen: NSScreen) -> CGSize {
+        let notchW = hasNotch(screen) ? physicalNotchWidth(on: screen) : 0
+        return CGSize(width: notchW + companionExtension(on: screen), height: earsHeight(on: screen))
+    }
+
     /// Height of the row beside the camera that holds the bot and the countdown.
     static func earsHeight(on screen: NSScreen) -> CGFloat {
         hasNotch(screen) ? physicalNotchHeight(on: screen) : 26

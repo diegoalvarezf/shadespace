@@ -82,6 +82,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             ClaudeCodeConnection.connect()
         }
     }
+    @objc private func toggleCompanion() { AppSettings.shared.companionEnabled.toggle() }
     @objc private func toggleLiveActivity() { AppSettings.shared.showLiveActivity.toggle() }
     @objc private func toggleLyrics() { AppSettings.shared.lyricsEnabled.toggle() }
     @objc private func toggleLyricsInNotch() { AppSettings.shared.lyricsInNotch.toggle() }
@@ -103,7 +104,8 @@ extension AppDelegate: NSMenuDelegate {
         menu.addItem(sectionHeader("Notch"))
         menu.addItem(toggleItem("Show Activity Below Notch", settings.showLiveActivity, #selector(toggleLiveActivity)))
 
-        let colorItem = NSMenuItem(title: "Pomodoro Bot Color", action: nil, keyEquivalent: "")
+        menu.addItem(toggleItem("Show Bot in Notch", settings.companionEnabled, #selector(toggleCompanion)))
+        let colorItem = NSMenuItem(title: "Bot Color", action: nil, keyEquivalent: "")
         let colorMenu = NSMenu()
         for option in BotColor.allCases {
             let item = toggleItem(option.title, settings.botColor == option, #selector(chooseBotColor(_:)))

@@ -45,6 +45,9 @@ final class AgentSessionStore: ObservableObject {
     private static let staleAfter: TimeInterval = 2 * 60 * 60
     private static let tokenKey = "agents.hookToken"
 
+    /// Called when a session finishes or fails, so the companion can react.
+    var onResult: ((AgentSession.Status) -> Void)?
+
     private weak var state: ShadespaceState?
     private var server: AgentHookServer?
     private var expiryTask: Task<Void, Never>?
@@ -150,7 +153,10 @@ final class AgentSessionStore: ObservableObject {
             break
         }
 
-        if session.status != previousStatus { session.statusChangedAt = now }
+        if session.status != previousStatus {
+            session.statusChangedAt = now
+            if session.status == .finished || session.status == .failed { onResult?(session.status) }
+        }
         sessions.removeAll { $0.id == session.id }
         sessions.insert(session, at: 0)
         sessions.removeAll { now.timeIntervalSince($0.updatedAt) > Self.staleAfter }

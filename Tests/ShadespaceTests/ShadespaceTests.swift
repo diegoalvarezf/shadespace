@@ -361,3 +361,27 @@ final class AgentVisibilityTests: XCTestCase {
         XCTAssertTrue(store.visibleSessions.isEmpty)
     }
 }
+
+final class BotLifeTests: XCTestCase {
+    func testDriftsWithTimeAndRecoversWhileAsleep() {
+        let start = Date()
+        var life = BotLife(happiness: 0.5, energy: 0.5, updatedAt: start)
+        life.advance(to: start.addingTimeInterval(10 * 3600), asleep: false)
+        XCTAssertEqual(life.happiness, 0.2, accuracy: 0.001)
+        XCTAssertEqual(life.energy, 0.1, accuracy: 0.001)
+        XCTAssertTrue(life.isGloomy)
+        XCTAssertTrue(life.isTired)
+
+        life.advance(to: start.addingTimeInterval(13 * 3600), asleep: true)
+        XCTAssertEqual(life.energy, 0.7, accuracy: 0.001)
+    }
+
+    func testNeverDropsToZeroAndCapsAtOne() {
+        var life = BotLife(happiness: 0.1, energy: 0.1, updatedAt: Date())
+        life.advance(to: Date().addingTimeInterval(1000 * 3600), asleep: false)
+        XCTAssertGreaterThan(life.happiness, 0)
+        XCTAssertGreaterThan(life.energy, 0)
+        for _ in 0..<20 { life.record(.focusCompleted) }
+        XCTAssertEqual(life.happiness, 1)
+    }
+}

@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// The pixel robot from diegoalvarezf.dev, keeping the Pomodoro company: antenna, outlined
-/// head with square eyes and a neck, on a 16×16 grid. Focused it blinks and hops now and then;
+/// The pixel robot from diegoalvarezf.dev that lives in the notch: antenna, outlined head with
+/// square eyes and a neck, on a 16×16 grid. Focused it blinks and hops now and then;
 /// on a break it bounces with happy ^ ^ eyes; paused it dozes with flat eyes and a "z";
 /// it jumps for joy when a focus session ends and cries when one is skipped. For coding
 /// agents it types while working and raises a "!" when it needs you.
@@ -10,6 +10,8 @@ struct PixelBot: View {
         case focus, rest, paused, celebrate, sad
         /// Agent activity: typing away, or waiting for you.
         case working, needsYou
+        /// Everyday life as a companion.
+        case sleep, dance, wave, gloomy
     }
 
     var mood: Mood
@@ -17,13 +19,18 @@ struct PixelBot: View {
     var focusColor: Color = BotColor.cyan.color
     /// The expanded card can afford a slightly livelier timeline than the notch.
     var animated = false
+    /// Where the eyes point: -1 left, 0 ahead, 1 right.
+    var look = 0
+    /// Bobs with every step while the companion walks.
+    var walking = false
 
     private static let grid = 16
     private static let screen = Color(red: 0.05, green: 0.04, blue: 0.12)
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: animated ? 0.08 : 0.12)) { ctx in
-            let sprite = Self.sprite(mood: mood, time: ctx.date.timeIntervalSinceReferenceDate)
+        TimelineView(.periodic(from: .now, by: animated || walking ? 0.08 : 0.12)) { ctx in
+            let sprite = Self.sprite(mood: mood, time: ctx.date.timeIntervalSinceReferenceDate,
+                                     look: look, walking: walking)
             let accent = Self.accent(for: mood, focusColor: focusColor)
             Canvas(rendersAsynchronously: false) { context, size in
                 // Half-point steps are whole device pixels on Retina, so the art stays crisp
@@ -53,7 +60,8 @@ struct PixelBot: View {
 
     static func accent(for mood: Mood, focusColor: Color) -> Color {
         switch mood {
-        case .focus, .celebrate, .sad, .working, .needsYou: return focusColor
+        case .focus, .celebrate, .sad, .working, .needsYou, .dance, .wave: return focusColor
+        case .sleep, .gloomy:                                              return focusColor.opacity(0.6)
         case .rest:                    return restColor
         case .paused:                  return pausedColor
         }
@@ -69,9 +77,11 @@ struct PixelBot: View {
         let ink: Ink
     }
 
-    private static func sprite(mood: Mood, time t: Double) -> [Pixel] {
+    private static func sprite(mood: Mood, time t: Double, look: Int, walking: Bool) -> [Pixel] {
         let tick = Int(t * 8)
         var dy = 0
+        var dx = 0
+        var antennaSway = 0
 
         switch mood {
         case .focus:
@@ -87,20 +97,31 @@ struct PixelBot: View {
         case .needsYou:
             // Restless little bounce to catch your eye
             dy = (tick / 2) % 2 == 0 ? 0 : -1
-        case .paused, .sad, .working:
+        case .dance:
+            // Side to side on the beat, with a little bounce
+            dx = (tick / 2) % 2 == 0 ? -1 : 1
+            dy = tick % 2 == 0 ? 0 : -1
+            antennaSway = -dx
+        case .wave:
+            antennaSway = tick % 2 == 0 ? -1 : 1
+            dy = (tick / 2) % 2 == 0 ? 0 : -1
+        case .paused, .sad, .working, .sleep, .gloomy:
             break
         }
+        if walking { dy = tick % 2 == 0 ? 0 : -1 }
 
         var pixels: [Pixel] = []
         func put(_ x: Int, _ y: Int, _ ink: Ink, moves: Bool = true) {
             // One row of headroom so a hop never clips the antenna
             let py = moves ? y + 1 + dy : y
-            guard (0..<grid).contains(x), (0..<grid).contains(py) else { return }
-            pixels.append(Pixel(x: x, y: py, ink: ink))
+            let px = moves ? x + dx : x
+            guard (0..<grid).contains(px), (0..<grid).contains(py) else { return }
+            pixels.append(Pixel(x: px, y: py, ink: ink))
         }
 
-        // Antenna
-        for y in 0...2 { put(7, y, .accent); put(8, y, .accent) }
+        // Antenna (the tip sways when dancing or waving)
+        put(7 + antennaSway, 0, .accent); put(8 + antennaSway, 0, .accent)
+        for y in 1...2 { put(7, y, .accent); put(8, y, .accent) }
 
         // Head: dark screen with a one-pixel outline
         for y in 3...11 {
@@ -116,12 +137,28 @@ struct PixelBot: View {
         // Eyes
         switch mood {
         case .focus:
-            // Blink for ~0.15 s roughly every 3.7 s
+            // Blink for ~0.15 s roughly every 3.7 s; eyes shift toward where it looks
             let blink = t.truncatingRemainder(dividingBy: 3.7) < 0.15
+            let eyes = [4, 5, 6, 9, 10, 11].map { min(max($0 + look, 3), 12) }
             if !blink {
-                for y in 6...8 { for x in [4, 5, 6, 9, 10, 11] { put(x, y, .accent) } }
+                for y in 6...8 { for x in eyes { put(x, y, .accent) } }
             } else {
-                for x in [4, 5, 6, 9, 10, 11] { put(x, 8, .accent) }
+                for x in eyes { put(x, 8, .accent) }
+            }
+        case .dance, .wave:
+            for (x, y) in [(4, 7), (5, 6), (5, 7), (6, 7), (9, 7), (10, 6), (10, 7), (11, 7)] {
+                put(x, y, .accent)
+            }
+        case .gloomy:
+            // Half-closed eyes looking down
+            for x in [4, 5, 6, 9, 10, 11] { put(x + look, 8, .accent); put(x + look, 9, .dim) }
+        case .sleep:
+            for x in [4, 5, 6, 9, 10, 11] { put(x, 8, .accent) }
+            // Rising "z"s
+            let phase = Int(t * 1.5) % 3
+            for (x, y) in [(12, 0), (13, 0), (14, 0), (15, 0), (14, 1), (15, 1), (13, 2), (14, 2),
+                           (12, 3), (13, 3), (14, 3), (15, 3)] where phase != 2 {
+                put(x, y + (phase == 0 ? 1 : 0), .dim, moves: false)
             }
         case .rest, .celebrate:
             for (x, y) in [(4, 7), (5, 6), (5, 7), (6, 7), (9, 7), (10, 6), (10, 7), (11, 7)] {
