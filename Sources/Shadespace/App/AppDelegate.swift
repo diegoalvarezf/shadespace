@@ -75,6 +75,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         guard let raw = sender.representedObject as? String, let color = BotColor(rawValue: raw) else { return }
         AppSettings.shared.botColor = color
     }
+    @objc private func toggleClaudeCode() {
+        if ClaudeCodeHooksInstaller.isInstalled() {
+            ClaudeCodeConnection.disconnect()
+        } else {
+            ClaudeCodeConnection.connect()
+        }
+    }
     @objc private func toggleLiveActivity() { AppSettings.shared.showLiveActivity.toggle() }
     @objc private func toggleLyrics() { AppSettings.shared.lyricsEnabled.toggle() }
     @objc private func toggleLyricsInNotch() { AppSettings.shared.lyricsInNotch.toggle() }
@@ -105,6 +112,11 @@ extension AppDelegate: NSMenuDelegate {
         }
         colorItem.submenu = colorMenu
         menu.addItem(colorItem)
+
+        menu.addItem(.separator())
+        menu.addItem(sectionHeader("Claude Code"))
+        menu.addItem(toggleItem("Connect Claude Code", ClaudeCodeHooksInstaller.isInstalled(),
+                                #selector(toggleClaudeCode)))
 
         menu.addItem(.separator())
         menu.addItem(sectionHeader("Music"))

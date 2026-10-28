@@ -12,6 +12,7 @@ final class ModuleRegistry: ObservableObject {
     let weather: WeatherService
     let volume: SystemVolume
     let pomodoro: PomodoroTimer
+    let agents: AgentSessionStore
     private var cancellables = Set<AnyCancellable>()
 
     init(state: ShadespaceState) {
@@ -24,12 +25,13 @@ final class ModuleRegistry: ObservableObject {
         self.weather = WeatherService()
         self.volume = SystemVolume()
         self.pomodoro = PomodoroTimer(state: state)
+        self.agents = AgentSessionStore(state: state)
 
         // Views observe the registry, so republish every module's changes through it
         let publishers: [ObservableObjectPublisher] = [
             nowPlaying.objectWillChange, ai.objectWillChange, fileConverter.objectWillChange,
             tray.objectWillChange, battery.objectWillChange, weather.objectWillChange,
-            volume.objectWillChange, pomodoro.objectWillChange,
+            volume.objectWillChange, pomodoro.objectWillChange, agents.objectWillChange,
         ]
         for publisher in publishers {
             publisher

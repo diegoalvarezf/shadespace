@@ -193,3 +193,171 @@ final class PomodoroTests: XCTestCase {
         XCTAssertEqual(PomodoroView.format(0), "0:00")
     }
 }
+
+final class HooksInstallerTests: XCTestCase {
+    private var url: URL!
+
+    override func setUpWithError() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        url = dir.appendingPathComponent("settings.json")
+    }
+
+    override func tearDownWithError() throws {
+        try? FileManager.default.removeItem(at: url.deletingLastPathComponent())
+    }
+
+    private func read() throws -> [String: Any] {
+        try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
+    }
+
+    /// A settings file shaped like a real one: other keys and someone else's hooks.
+    private func writeExisting() throws {
+        let existing: [String: Any] = [
+            "model": "opus",
+            "hooks": [
+                "PreToolUse": [["matcher": "Read", "hooks": [["type": "command", "command": "node other.js"]]]],
+                "UserPromptSubmit": [["hooks": [["type": "command", "command": "node other.js"]]]],
+            ],
+        ]
+        try JSONSerialization.data(withJSONObject: existing).write(to: url)
+    }
+
+    func testInstallMergesWithoutTouchingExistingHooks() throws {
+        try writeExisting()
+        let backup = try ClaudeCodeHooksInstaller.install(token: "abc", at: url)
+
+        XCTAssertNotNil(backup)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: backup!.path))
+        let settings = try read()
+        XCTAssertEqual(settings["model"] as? String, "opus")
+        let hooks = try XCTUnwrap(settings["hooks"] as? [String: Any])
+        let pre = try XCTUnwrap(hooks["PreToolUse"] as? [[String: Any]])
+        XCTAssertEqual(pre.count, 2)
+        XCTAssertEqual(pre[0]["matcher"] as? String, "Read")
+        let ours = try XCTUnwrap((pre[1]["hooks"] as? [[String: Any]])?.first)
+        XCTAssertEqual(ours["type"] as? String, "http")
+        XCTAssertEqual(ours["url"] as? String, AgentHookServer.url)
+        XCTAssertEqual((ours["headers"] as? [String: String])?["X-Shadespace-Token"], "abc")
+        XCTAssertTrue(ClaudeCodeHooksInstaller.isInstalled(at: url))
+    }
+
+    func testReinstallReplacesOnlyItsOwnEntry() throws {
+        try writeExisting()
+        try ClaudeCodeHooksInstaller.install(token: "old", at: url)
+        try ClaudeCodeHooksInstaller.install(token: "new", at: url)
+        let hooks = try XCTUnwrap(try read()["hooks"] as? [String: Any])
+        let pre = try XCTUnwrap(hooks["PreToolUse"] as? [[String: Any]])
+        XCTAssertEqual(pre.count, 2)
+        let header = (pre[1]["hooks"] as? [[String: Any]])?.first?["headers"] as? [String: String]
+        XCTAssertEqual(header?["X-Shadespace-Token"], "new")
+    }
+
+    func testUninstallRestoresTheOriginalHooks() throws {
+        try writeExisting()
+        try ClaudeCodeHooksInstaller.install(token: "abc", at: url)
+        try ClaudeCodeHooksInstaller.uninstall(at: url)
+
+        let settings = try read()
+        let hooks = try XCTUnwrap(settings["hooks"] as? [String: Any])
+        XCTAssertEqual(Set(hooks.keys), ["PreToolUse", "UserPromptSubmit"])
+        XCTAssertEqual((hooks["PreToolUse"] as? [[String: Any]])?.count, 1)
+        XCTAssertFalse(ClaudeCodeHooksInstaller.isInstalled(at: url))
+    }
+
+    func testUninstallWithoutOurHooksLeavesTheFileAlone() throws {
+        try writeExisting()
+        let before = try Data(contentsOf: url)
+        XCTAssertNil(try ClaudeCodeHooksInstaller.uninstall(at: url))
+        XCTAssertEqual(try Data(contentsOf: url), before)
+    }
+
+    func testInstallCreatesTheFileWhenMissing() throws {
+        XCTAssertNil(try ClaudeCodeHooksInstaller.install(token: "abc", at: url))
+        XCTAssertTrue(ClaudeCodeHooksInstaller.isInstalled(at: url))
+    }
+}
+
+final class AgentEventTests: XCTestCase {
+    private func event(_ object: [String: Any]) -> AgentEvent {
+        var payload: [String: Any] = ["session_id": "s1", "cwd": "/Users/me/shadespace"]
+        payload.merge(object) { $1 }
+        return AgentEvent(json: try! JSONSerialization.data(withJSONObject: payload))!
+    }
+
+    func testEditStepCountsLines() {
+        let edit = event(["hook_event_name": "PostToolUse", "tool_name": "Edit",
+                          "tool_input": ["file_path": "/x/RootView.swift", "old_string": "a\nb\nc", "new_string": "a\nb\nc\nd\ne"]])
+        XCTAssertEqual(edit.toolStep(withChanges: true), "Edit · RootView.swift +5 −3")
+        XCTAssertEqual(edit.toolStep(withChanges: false), "Edit · RootView.swift")
+        XCTAssertEqual(edit.projectName, "shadespace")
+    }
+
+    func testOtherToolSteps() {
+        XCTAssertEqual(event(["hook_event_name": "PreToolUse", "tool_name": "Bash",
+                              "tool_input": ["command": "npm test", "description": "Run tests"]]).toolStep(withChanges: false),
+                       "Bash · Run tests")
+        XCTAssertEqual(event(["hook_event_name": "PostToolUse", "tool_name": "Write",
+                              "tool_input": ["file_path": "/a/b.md", "content": "1\n2\n"]]).toolStep(withChanges: true),
+                       "Write · b.md +2")
+        XCTAssertEqual(event(["hook_event_name": "PreToolUse", "tool_name": "mcp__github__create_issue"]).toolStep(withChanges: false),
+                       "create_issue · github")
+    }
+
+    func testRejectsPayloadsWithoutSession() {
+        XCTAssertNil(AgentEvent(json: Data(#"{"hook_event_name":"Stop"}"#.utf8)))
+    }
+
+    func testHTTPRequestNeedsTheWholeBody() {
+        let body = #"{"a":1}"#
+        let head = "POST /claude-code HTTP/1.1\r\nHost: 127.0.0.1\r\nX-Shadespace-Token: t\r\nContent-Length: \(body.utf8.count)\r\n\r\n"
+        XCTAssertNil(HTTPRequest(Data((head + "{\"a\"").utf8)))
+        let request = HTTPRequest(Data((head + body).utf8))
+        XCTAssertEqual(request?.method, "POST")
+        XCTAssertEqual(request?.path, "/claude-code")
+        XCTAssertEqual(request?.headers["x-shadespace-token"], "t")
+        XCTAssertEqual(request.map { String(decoding: $0.body, as: UTF8.self) }, body)
+    }
+}
+
+@MainActor
+final class AgentSessionStoreTests: XCTestCase {
+    private func send(_ store: AgentSessionStore, _ name: String, _ extra: [String: Any] = [:], at date: Date) {
+        var payload: [String: Any] = ["session_id": "s1", "cwd": "/p/app", "hook_event_name": name]
+        payload.merge(extra) { $1 }
+        store.apply(AgentEvent(json: try! JSONSerialization.data(withJSONObject: payload))!, at: date)
+    }
+
+    func testLifecycle() {
+        let store = AgentSessionStore(state: ShadespaceState(screen: NSScreen.screens[0]))
+        let now = Date()
+        send(store, "SessionStart", at: now)
+        XCTAssertEqual(store.sessions.first?.status, .idle)
+        XCTAssertTrue(store.visibleSessions.isEmpty)
+
+        send(store, "PreToolUse", ["tool_name": "Read", "tool_input": ["file_path": "/p/app/a.swift"]], at: now)
+        XCTAssertEqual(store.primarySession?.status, .working)
+        XCTAssertEqual(store.primarySession?.step, "Read · a.swift")
+
+        send(store, "PermissionRequest", ["tool_name": "Bash", "tool_input": ["command": "rm x"]], at: now)
+        XCTAssertTrue(store.needsInput)
+        XCTAssertEqual(store.primarySession?.botMood, .needsYou)
+
+        send(store, "Stop", at: now)
+        XCTAssertEqual(store.primarySession?.botMood, .celebrate)
+
+        send(store, "SessionEnd", ["reason": "other"], at: now)
+        XCTAssertTrue(store.sessions.isEmpty)
+    }
+}
+
+@MainActor
+final class AgentVisibilityTests: XCTestCase {
+    func testQuietSessionsLeaveTheNotch() {
+        let store = AgentSessionStore(state: ShadespaceState(screen: NSScreen.screens[0]))
+        let payload = #"{"session_id":"q","hook_event_name":"PreToolUse","tool_name":"Bash"}"#
+        store.apply(AgentEvent(json: Data(payload.utf8))!, at: Date().addingTimeInterval(-11 * 60))
+        XCTAssertEqual(store.sessions.count, 1)
+        XCTAssertTrue(store.visibleSessions.isEmpty)
+    }
+}

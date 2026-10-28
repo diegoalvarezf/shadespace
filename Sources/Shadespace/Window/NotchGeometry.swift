@@ -81,6 +81,17 @@ enum NotchGeometry {
             : CGSize(width: 150, height: 26)
     }
 
+    /// Height of the row beside the camera that holds the bot and the countdown.
+    static func earsHeight(on screen: NSScreen) -> CGFloat {
+        hasNotch(screen) ? physicalNotchHeight(on: screen) : 26
+    }
+
+    /// Coding agent at work: the bot beside the notch plus a line below with the current step.
+    static func agentActivitySize(on screen: NSScreen) -> CGSize {
+        CGSize(width: max(collapsedRect(on: screen).width, 240),
+               height: earsHeight(on: screen) + liveStripHeight)
+    }
+
     /// Top part of a peek alert: the notch itself when hidden, the full collapsed row otherwise.
     static func peekHeaderHeight(on screen: NSScreen, liveActivity: Bool) -> CGFloat {
         liveActivity ? collapsedRect(on: screen).height : max(physicalNotchHeight(on: screen), 6)

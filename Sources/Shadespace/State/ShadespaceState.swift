@@ -27,6 +27,7 @@ enum IslandAlert: Equatable {
 enum IslandPage: Equatable {
     case nowPlaying
     case pomodoro
+    case agents
     case tray
 }
 
@@ -50,6 +51,8 @@ final class ShadespaceState: ObservableObject {
     @Published private(set) var isDragging = false
     /// A running or paused Pomodoro keeps the island visible beside the notch.
     @Published var pomodoroActive = false
+    /// A coding agent session is working, waiting for you, or just finished.
+    @Published var agentsActive = false
     @Published var hoveredDropZone: DropZone?
     /// Zones that can take what is being dragged; the others are dimmed.
     @Published var supportedDropZones: Set<DropZone> = Set(DropZone.allCases)
@@ -140,10 +143,21 @@ final class ShadespaceState: ObservableObject {
     var islandSize: CGSize {
         let liveActivity = AppSettings.shared.showLiveActivity
         if isExpanded { return NotchGeometry.expandedSize(on: screen) }
-        if alert != nil { return NotchGeometry.peekSize(on: screen, liveActivity: liveActivity) }
+        if alert != nil {
+            let peek = NotchGeometry.peekSize(on: screen, liveActivity: liveActivity)
+            return CGSize(width: peek.width, height: peekHeaderHeight + NotchGeometry.peekContentHeight)
+        }
         if liveActivity { return NotchGeometry.collapsedRect(on: screen).size }
+        if agentsActive { return NotchGeometry.agentActivitySize(on: screen) }
         if pomodoroActive { return NotchGeometry.activitySize(on: screen) }
         return NotchGeometry.hiddenSize(on: screen)
+    }
+
+    /// Top row of a peek alert: the bot row when an activity is running, else just the notch.
+    var peekHeaderHeight: CGFloat {
+        if AppSettings.shared.showLiveActivity { return NotchGeometry.collapsedRect(on: screen).height }
+        if agentsActive || pomodoroActive { return NotchGeometry.earsHeight(on: screen) }
+        return NotchGeometry.peekHeaderHeight(on: screen, liveActivity: false)
     }
 
     var isHidden: Bool {

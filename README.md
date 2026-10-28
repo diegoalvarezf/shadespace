@@ -12,6 +12,7 @@ A native macOS app that turns the MacBook notch into a small, quiet island. It s
   - **AirDrop**: send the files to a nearby device.
   - **Tray**: keep files for later, drag them out into any app or AirDrop them.
 - **Pomodoro**: 15, 25 or 50-minute focus sessions with short breaks and a long break every fourth session. While it runs, a pixel bot and the countdown sit beside the notch; the bot blinks while you focus, bounces on breaks, dozes when paused and celebrates when a session ends. Its color is set in the menu.
+- **Claude Code sessions**: connect Claude Code from the menu and the pixel bot appears beside the notch while an agent works, with a line describing the current step (for example "Edit · RootView.swift +12 −3"). It types while working, raises a "!" when the agent needs you, and celebrates when it's done. An Agents page lists every session and its last step. Hooks are added to `~/.claude/settings.json` next to your existing ones, after a backup, and are sent only to a local server on `127.0.0.1`.
 - **Alerts**: charger connected, low battery, fully charged, AirPods connected with their battery levels.
 - **Home**: clock, date and local weather when nothing is playing.
 - **Any display**: on Macs without a notch or on an external monitor, the island opens from the top edge of the screen.
@@ -28,6 +29,7 @@ Settings live in the menu bar icon: lyrics, weather units, alerts, an optional a
 - No accounts, analytics or telemetry.
 - Music is read locally from Spotify and Music through Apple Events.
 - Summaries run on the Mac's on-device model.
+- Claude Code hook events are received on `127.0.0.1` only and need a per-install token; nothing is reachable from the network.
 - Network requests are limited to lyrics (song title, artist, album and duration sent to LRCLib) and weather (location rounded to about 1 km, sent to [Open-Meteo](https://open-meteo.com)). Both can be turned off.
 
 macOS asks for permission the first time Shadespace controls Spotify or Music, reads your location for weather, and uses Bluetooth for AirPods.

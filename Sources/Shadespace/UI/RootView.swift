@@ -28,16 +28,17 @@ struct RootView: View {
             } else {
                 if settings.showLiveActivity {
                     CollapsedNotchRow()
-                } else if state.pomodoroActive {
-                    PomodoroEars()
-                        .frame(height: state.alert == nil
-                            ? state.islandSize.height
-                            : NotchGeometry.peekHeaderHeight(on: state.screen, liveActivity: false))
+                } else if state.agentsActive || state.pomodoroActive {
+                    ActivityEars()
+                        .frame(height: NotchGeometry.earsHeight(on: state.screen))
+                    if state.agentsActive && state.alert == nil {
+                        AgentStepLine()
+                            .frame(height: NotchGeometry.liveStripHeight)
+                            .transition(.opacity)
+                    }
                 } else {
                     // Hidden: only the notch-sized black area, invisible against the hardware
-                    Color.clear.frame(height: state.alert == nil
-                        ? state.islandSize.height
-                        : NotchGeometry.peekHeaderHeight(on: state.screen, liveActivity: false))
+                    Color.clear.frame(height: state.alert == nil ? state.islandSize.height : state.peekHeaderHeight)
                 }
                 if let alert = state.alert {
                     AlertRow(alert: alert)
@@ -85,6 +86,7 @@ struct RootView: View {
                 switch state.page {
                 case .nowPlaying: NowPlayingView()
                 case .pomodoro:   PomodoroView()
+                case .agents:     AgentsView()
                 case .tray:       FileTrayView()
                 }
             case .aiReading(let progress):
@@ -163,22 +165,53 @@ private struct CollapsedNotchRow: View {
 
 /// Running Pomodoro while the island is otherwise hidden: the bot on the left of the
 /// camera, the countdown on the right.
-private struct PomodoroEars: View {
+/// Bot on the left of the camera, countdown (or agent count) on the right. Shown while a coding
+/// agent or a Pomodoro is active and the island is otherwise hidden. Agents take the bot when
+/// both run, since they are the ones that may need you.
+private struct ActivityEars: View {
     @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var state: ShadespaceState
     @EnvironmentObject var modules: ModuleRegistry
 
     var body: some View {
         let notchW = NotchGeometry.hasNotch(state.screen) ? NotchGeometry.physicalNotchWidth(on: state.screen) : 0
+        let agent = state.agentsActive ? modules.agents.primarySession : nil
         HStack(spacing: 0) {
-            PixelBot(mood: modules.pomodoro.mood, focusColor: settings.botColor.color)
+            PixelBot(mood: agent?.botMood ?? modules.pomodoro.mood, focusColor: settings.botColor.color)
                 .frame(width: 30, height: 30)
                 .frame(maxWidth: .infinity)
             Color.clear.frame(width: notchW)
-            PomodoroCountdown()
-                .frame(maxWidth: .infinity)
+            Group {
+                if state.pomodoroActive {
+                    PomodoroCountdown()
+                } else if modules.agents.visibleSessions.count > 1 {
+                    Text("×\(modules.agents.visibleSessions.count)")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundStyle(settings.botColor.color)
+                }
+            }
+            .frame(maxWidth: .infinity)
         }
         .transition(.opacity)
+    }
+}
+
+/// What the main agent session is doing right now, below the notch.
+private struct AgentStepLine: View {
+    @EnvironmentObject var modules: ModuleRegistry
+
+    var body: some View {
+        if let session = modules.agents.primarySession {
+            Text(session.step)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundStyle(session.status == .needsInput ? PixelBot.alertColor : .white.opacity(0.75))
+                .lineLimit(1)
+                .truncationMode(.middle)
+                .padding(.horizontal, 16)
+                .id(session.step)
+                .transition(.opacity)
+                .animation(.easeInOut(duration: 0.15), value: session.step)
+        }
     }
 }
 
@@ -289,6 +322,7 @@ private struct ExpandedHeader: View {
                 HStack(spacing: 4) {
                     pageButton(.nowPlaying, symbol: "music.note")
                     pageButton(.pomodoro, symbol: "timer", indicator: modules.pomodoro.isRunning)
+                    pageButton(.agents, symbol: "terminal", indicator: modules.agents.needsInput)
                     pageButton(.tray, symbol: "tray.full", badge: modules.tray.items.count)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

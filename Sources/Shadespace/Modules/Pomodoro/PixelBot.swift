@@ -3,10 +3,13 @@ import SwiftUI
 /// The pixel robot from diegoalvarezf.dev, keeping the Pomodoro company: antenna, outlined
 /// head with square eyes and a neck, on a 16×16 grid. Focused it blinks and hops now and then;
 /// on a break it bounces with happy ^ ^ eyes; paused it dozes with flat eyes and a "z";
-/// it jumps for joy when a focus session ends and cries when one is skipped.
+/// it jumps for joy when a focus session ends and cries when one is skipped. For coding
+/// agents it types while working and raises a "!" when it needs you.
 struct PixelBot: View {
     enum Mood: Equatable {
         case focus, rest, paused, celebrate, sad
+        /// Agent activity: typing away, or waiting for you.
+        case working, needsYou
     }
 
     var mood: Mood
@@ -35,6 +38,7 @@ struct PixelBot: View {
                     case .accent: fill = accent
                     case .dim:    fill = accent.opacity(0.4)
                     case .screen: fill = Self.screen
+                    case .alert:  fill = Self.alertColor
                     }
                     context.fill(Path(rect), with: .color(fill))
                 }
@@ -45,10 +49,11 @@ struct PixelBot: View {
 
     static let restColor = Color(red: 0.45, green: 1, blue: 0.6)
     static let pausedColor = Color(white: 0.6)
+    static let alertColor = Color(red: 1, green: 0.76, blue: 0.2)
 
     static func accent(for mood: Mood, focusColor: Color) -> Color {
         switch mood {
-        case .focus, .celebrate, .sad: return focusColor
+        case .focus, .celebrate, .sad, .working, .needsYou: return focusColor
         case .rest:                    return restColor
         case .paused:                  return pausedColor
         }
@@ -56,7 +61,7 @@ struct PixelBot: View {
 
     // MARK: - Sprite
 
-    private enum Ink { case accent, dim, screen }
+    private enum Ink { case accent, dim, screen, alert }
 
     private struct Pixel {
         let x: Int
@@ -79,7 +84,10 @@ struct PixelBot: View {
         case .celebrate:
             // Quick repeated jumps
             dy = tick % 2 == 0 ? -1 : 0
-        case .paused, .sad:
+        case .needsYou:
+            // Restless little bounce to catch your eye
+            dy = (tick / 2) % 2 == 0 ? 0 : -1
+        case .paused, .sad, .working:
             break
         }
 
@@ -124,6 +132,20 @@ struct PixelBot: View {
             // Falling tears, offset between the eyes
             put(5, 9 + tick % 2, .dim)
             put(10, 9 + (tick + 1) % 2, .dim)
+        case .working:
+            // Eyes looking down at the keys, keystrokes flickering along the bottom of the screen
+            let blink = t.truncatingRemainder(dividingBy: 4.3) < 0.15
+            for y in (blink ? [8] : [7, 8]) { for x in [4, 5, 6, 9, 10, 11] { put(x, y, .accent) } }
+            put(4 + (tick * 3) % 8, 10, .dim)
+            put(4 + (tick * 5 + 3) % 8, 10, .dim)
+        case .needsYou:
+            for y in 6...8 { for x in [4, 5, 6, 9, 10, 11] { put(x, y, .accent) } }
+            // A blinking "!" beside the antenna
+            if tick % 4 < 3 {
+                for (x, y) in [(14, 0), (15, 0), (14, 1), (15, 1), (14, 2), (15, 2), (14, 4), (15, 4)] {
+                    put(x, y, .alert, moves: false)
+                }
+            }
         case .paused:
             for x in [4, 5, 6, 9, 10, 11] { put(x, 8, .accent) }
             if t.truncatingRemainder(dividingBy: 2) < 1.3 {
