@@ -66,3 +66,7 @@ Sources/Shadespace/
               Battery, AirPods, Weather
 Tests/        Unit tests
 ```
+
+## License
+
+[MIT](LICENSE)
