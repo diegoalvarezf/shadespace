@@ -11,13 +11,14 @@ A native macOS app that turns the MacBook notch into a small, quiet island. It s
   - **Convert**: PNG ↔ JPG, and HEIC, WebP, TIFF or GIF to PNG/JPG. The original is never overwritten.
   - **AirDrop**: send the files to a nearby device.
   - **Tray**: keep files for later, drag them out into any app or AirDrop them.
-- **Pomodoro**: 15, 25 or 50-minute focus sessions with short breaks and a long break every fourth session. While it runs, a pixel bot and the countdown sit beside the notch; the bot blinks while you focus, bounces on breaks, dozes when paused and celebrates when a session ends. Its color is set in the menu.
-- **Claude Code sessions**: connect Claude Code from the menu and the pixel bot appears beside the notch while an agent works, with a line describing the current step (for example "Edit · RootView.swift +12 −3"). It types while working, raises a "!" when the agent needs you, and celebrates when it's done. An Agents page lists every session and its last step. Hooks are added to `~/.claude/settings.json` next to your existing ones, after a backup, and are sent only to a local server on `127.0.0.1`.
+- **Pomodoro**: 15, 25 or 50-minute focus sessions with short breaks and a long break every fourth session. While it runs, the countdown sits beside the notch and the pixel bot reacts to it: it blinks while you focus, bounces on breaks, dozes when paused and celebrates when a session ends.
+- **Claude Code sessions**: connect Claude Code from the menu and, while an agent works, the pixel bot shows a line describing the current step (for example "Edit · RootView.swift +12 −3"). It types while working, raises a "!" when the agent needs you, and celebrates when it's done. An Agents page lists every session and its last step. Hooks are added to `~/.claude/settings.json` next to your existing ones, after a backup, and are sent only to a local server on `127.0.0.1`.
+- **Pixel bot companion**: a small pixel bot lives beside the camera, on one side of the notch. It blinks, glances around, ducks behind the camera, crosses to the other side, waves hello, dances to music and falls asleep after 10 minutes without input or when it's worn out. Its mood and energy drift over time, grow with finished Pomodoros, finished agent sessions and music, and recover while it sleeps. When the island opens it strolls along the strip below the header, with its mood and energy on the right. Show it or hide it, and pick its color, from the menu.
 - **Alerts**: charger connected, low battery, fully charged, AirPods connected with their battery levels.
 - **Home**: clock, date and local weather when nothing is playing.
 - **Any display**: on Macs without a notch or on an external monitor, the island opens from the top edge of the screen.
 
-Settings live in the menu bar icon: lyrics, weather units, alerts, an optional activity strip below the notch, and launch at login.
+Settings live in the menu bar icon: lyrics, weather units, alerts, the bot and its color, an optional activity strip below the notch, and launch at login.
 
 ## Requirements
 
@@ -61,6 +62,7 @@ Sources/Shadespace/
   Window/     Notch panel, geometry, hover tracking and file drops
   State/      Island state, settings and module registry
   UI/         Island views and shared components
-  Modules/    NowPlaying, AI, Files, Tray, Battery, AirPods, Weather
+  Modules/    NowPlaying, AI, Files, Tray, Share, Pomodoro, Agents, Companion,
+              Battery, AirPods, Weather
 Tests/        Unit tests
 ```
